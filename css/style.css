@@ -1,3 +1,7 @@
+* {
+    font-family: 'Lato';
+}
+
 header {
     display: flex;
     justify-content: center;
@@ -9,6 +13,7 @@ main {
 }
 
 
+/* search section */
 .section-search {
     margin: 20px 0;
 }
@@ -41,11 +46,11 @@ main {
     cursor: pointer;
 }
 
-/* filter */
+/* filter section */
 .section-filter {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 .filter-container {
@@ -63,7 +68,6 @@ main {
     display: flex;
     align-items: center;
 }
-
 
 .button-filter-blue {
     background: #3282F7;
@@ -102,6 +106,113 @@ main {
     content: "\f057";
     font-weight: 400;
     font-size: 18px;
-    position: absolute;
-    right: 20px;
+    margin-left: 13px;
+}
+
+/* recipe section */
+.card-container {
+    margin: 25px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* min gap */
+    gap: 50px ; 
+}
+
+.card {
+    height: 364px;
+    width: 380px;
+    left: 0px;
+    top: 0px;
+    border-radius: 5px;
+    background: #C7BEBE;
+    margin-bottom: 50px;
+}
+
+.card-picture {
+    height: 178px;
+    width: 380px;
+}
+
+.recipe-picture {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.card-content {
+    height: 186px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    background: #E7E7E7;
+    border-radius: 0 0 5px 5px;
+}
+
+.content-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.recipe-title {
+    font-weight: normal;
+}
+
+.recipe-duration {
+    font-weight: bold;
+}
+
+.recipe-duration::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f017";
+    font-weight: 400;
+    margin-right: 7px;
+}
+
+.recipe-title, .recipe-duration {
+    font-size: 18px;
+    margin: 0;
+}
+
+
+.content-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recipe-ingredients, .recipe-notice {
+    font-size: 12px;
+}
+
+.recipe-ingredients {
+    width: 171px;
+    height: 109px;
+    margin: 0;
+}
+
+.recipe-notice {
+    width: 171px;
+    height: 109px;
+}
+
+.recipe-notice p {
+    margin: 0;
+}
+
+.ingredients-item {
+    display: flex;
+    align-items: center;;
+}
+
+.ingredients-item p {
+    padding-left: 3px;
+}
+
+.ingredients-item h3, .ingredients-item p {
+    margin: 0;
 }
