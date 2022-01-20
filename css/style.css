@@ -44,19 +44,24 @@ main {
 /* filter */
 .section-filter {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filter-container {
+    display: flex;
     gap: 20px;
 }
 
 .button-filter {
-    height: 69px;
-    width: 170px;
     border-radius: 5px;
-    font-size: 18px;
     color: white;
     border: none;
     position: relative;
     text-align: left;
     padding-left: 20px;
+    display: flex;
+    align-items: center;
 }
 
 
@@ -72,11 +77,31 @@ main {
     background: #ED6454;
 }
 
-.button-filter::after { /* arrow */
+.dropdown-menu {
+    height: 69px;
+    width: 170px;
+    font-size: 18px;
+}
+
+.dropdown-menu::after { /* arrow */
     font-family: "Font Awesome 5 Free";
     content: "\f078";
     font-weight: bold;
     font-size: 18px;
     position: absolute;
     right: 18px;
-} 
+}
+
+.button-tag {
+    height: 37px;
+    width: 107px;
+}
+
+.button-tag::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f057";
+    font-weight: 400;
+    font-size: 18px;
+    position: absolute;
+    right: 20px;
+}
