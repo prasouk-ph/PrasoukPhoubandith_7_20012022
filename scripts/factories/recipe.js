@@ -89,6 +89,7 @@ class RecipeFactory {
     }
 }
 
+
 class IngredientFactory {
     constructor(data) {
         this.ingredient = data.ingredient;
@@ -104,7 +105,7 @@ class IngredientFactory {
         } else if (this.quantity == undefined && this.unit != undefined) {
             return this.unit;
         } else if (this.quantity == undefined && this.unit == undefined) {
-            return this.ingredient;
+            return "";
         }
     }
 
@@ -112,10 +113,13 @@ class IngredientFactory {
         const ingredientsItem = document.createElement("div");
         ingredientsItem.classList.add("ingredients-item");
         const ingredientTitle = document.createElement("h3");
-        ingredientTitle.textContent = this.ingredient;
-        const ingredientQuantity = document.createElement("p");
-        ingredientQuantity.textContent = this.getQuantity();
-        ingredientsItem.append(ingredientTitle, ingredientQuantity);
+        ingredientTitle.textContent = `${this.ingredient}:`;
+        ingredientsItem.append(ingredientTitle);
+        if (this.quantity != undefined) {
+            const ingredientQuantity = document.createElement("p");
+            ingredientQuantity.textContent = this.getQuantity();
+            ingredientsItem.append(ingredientQuantity);
+            }
         return (ingredientsItem);
     }
 }

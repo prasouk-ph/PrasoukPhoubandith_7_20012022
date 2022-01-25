@@ -97,6 +97,12 @@ main {
     right: 18px;
 }
 
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 .button-tag {
     height: 37px;
     width: 107px;
@@ -184,6 +190,7 @@ main {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 }
 
 .recipe-ingredients, .recipe-notice {
@@ -194,11 +201,18 @@ main {
     width: 171px;
     height: 109px;
     margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .recipe-notice {
     width: 171px;
     height: 109px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;  
 }
 
 .recipe-notice p {
