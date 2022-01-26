@@ -60,8 +60,8 @@ main {
 
 .button-filter {
     border-radius: 5px;
-    color: white;
     border: none;
+    color: white;
     position: relative;
     text-align: left;
     padding-left: 20px;
@@ -96,6 +96,100 @@ main {
     position: absolute;
     right: 18px;
 }
+
+.filter-menu {
+    border-radius: 5px;
+    color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    cursor: pointer;
+}
+
+.filter-menu-blue {
+    background: #3282F7;
+}
+
+
+
+.filter-menu-title {
+    display: flex;
+    align-items: center;
+    height: 69px;
+    min-width: 130px;
+    font-size: 18px;
+    padding: 0 20px;
+}
+
+.filter-menu-title::after { /* arrow */
+    font-family: "Font Awesome 5 Free";
+    content: "\f078";
+    font-weight: bold;
+    font-size: 18px;
+    position: absolute;
+    right: 18px;
+}
+
+.filter-menu-content {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    padding: 10px 20px;
+    background: #3282F7;
+    z-index: 1;
+    transform-origin: top left;
+    animation-name: dropdownopen;
+    animation-duration: 0.3s;
+}
+
+.filter-menu-content::after { /* arrow */
+    font-family: "Font Awesome 5 Free";
+    content: "\f077";
+    font-weight: bold;
+    font-size: 18px;
+    position: absolute;
+    top: 25px;
+    right: 24px;
+}
+
+.filter-menu-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.option-item {
+    width: 205px;
+    height: 22px;
+    list-style: none;
+    padding: 5px 10px;
+}
+
+.option-item:hover {
+    background-color: rgb(6, 62, 147, 0.3);
+    border-radius: 5px;
+}
+
+#filter-search-bar {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    min-width: 170px;
+    width: 100%;
+    margin: 16px 0;
+    position: relative;
+}
+
+#filter-search-bar::placeholder {
+    color: #7EB0F9;
+}
+
+
 
 .tag-container {
     display: flex;
@@ -230,4 +324,14 @@ main {
 
 .ingredients-item h3, .ingredients-item p {
     margin: 0;
+}
+
+
+@keyframes dropdownopen {
+    from {
+      transform: scale(0.1);
+    }
+    to {
+      transform: scale(1);
+    }
 }
