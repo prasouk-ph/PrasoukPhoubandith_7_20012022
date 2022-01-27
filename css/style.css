@@ -177,13 +177,13 @@ main {
     width: 100%;
     margin: 16px 0;
     position: relative;
+    color: white;
+    font-weight: bold;
 }
 
 #filter-search-bar::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
-
-
 
 .tag-container {
     display: flex;
@@ -300,7 +300,8 @@ main {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical;  
+    -webkit-box-orient: vertical;
+    font-family: 'Roboto';
 }
 
 .recipe-notice p {
