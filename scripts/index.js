@@ -42,61 +42,14 @@ function openDropdown(event) {
             menuDropdownSelected.style.width = "680px";
             menuSelected.style.marginRight = "550px";
         }
-    // menuIngredientDropdownContent.classList.add("active");
-    }
-}
 
-// document.addEventListener("click", closeModal)
+        document.addEventListener("click", closeModal)
 
-function closeModal(event) {
-    const menuIngredientDropdownContent = document.querySelector(".filter-menu-content");
-    const optionItems = document.querySelectorAll(".option-item");
-
-    // console.log(event.target.childNodes)
-    if (event.target == optionItems || event.target == menuIngredientDropdownContent || event.target == menuIngredientGap) {
-        alert("drop")
-        // menuIngredientGap.style.marginRight = "0px";
-        // menuIngredientDropdownContent.style.display = "none";
-      }
-    //   if (!event.target.className.includes("active") && event.target != option) {
-    //   && !event.target.matches(".filter-menu-content")
-
-    // if (event.target.className.includes("filter-menu-content", "filter-menu-title", "filter-menu-ingredient", "filter-menu-options")) {
-    //     menuIngredientDropdownContent.style.display = "block";
-    // } else {
-    //     menuIngredientGap.style.marginRight = "0px";
-    //     menuIngredientDropdownContent.style.display = "none";
-    // }
-}
-
-
-
-function closeDropdown() {
-    document.removeEventListener("keydown", closeDropdownWithKeyboard);
-    document.removeEventListener("click", closeDropdownOnClick);
-
-    options.style.display = "none";
-    currentValue.setAttribute("aria-expanded", "false");
-
-    // focus management
-    logoLink.tabIndex = 0;
-    contactButton.tabIndex = 0;
-    allMedia.forEach(media => media.tabIndex = 0);
-    mediaVideos.forEach(media => media.tabIndex  = 0);
-    likesCount.forEach(likes => likes.tabIndex  = 0);
-}
-
-
-function closeDropdownWithKeyboard(event) {
-if (event.key == "Escape") {
-    closeDropdown();
-}
-}
-
-function closeDropdownOnClick(event) {
-if (event.target.className.includes("current_value")) {
-    options.style.display = "block";
-} else {
-    closeDropdown();
-}
+        function closeModal(event) {
+            if (!event.target.parentNode.className.includes("filter-menu")) {
+                menuDropdownSelected.style.display = "none";
+                filterMenus.forEach(menu => menu.style.marginRight = "0px");
+            } 
+        }
+    }   
 }
