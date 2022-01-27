@@ -31,11 +31,8 @@ main {
     background: #E7E7E7;
     height: 69px;
     border: none;
-    
     padding: 20px;
     font-size: 18px;
-    color: #ABACAB;
-    
 }
 
 .search-button {
@@ -221,7 +218,6 @@ main {
     top: 0px;
     border-radius: 5px;
     background: #C7BEBE;
-    margin-bottom: 50px;
 }
 
 .card-picture {

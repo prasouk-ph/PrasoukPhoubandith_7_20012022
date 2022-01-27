@@ -1,4 +1,16 @@
 function init() {
+    displayRecipe();
+    loadFilterItems();
+
+    const filterMenus = document.querySelectorAll(".filter-menu");
+    filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
+}
+
+init();
+
+
+// Functions
+function displayRecipe() {
     const main = document.querySelector("main");
     const recipesSection = document.createElement("div");
     recipesSection.classList.add("section-recipes");
@@ -12,12 +24,16 @@ function init() {
         const recipeCard = recipeModel.createCard();
         cardContainer.appendChild(recipeCard);
     });
-
-    const filterMenus = document.querySelectorAll(".filter-menu");
-    filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
 }
 
-init();
+function loadFilterItems() {
+    const recipesDisplayed = document.querySelectorAll(".card");
+    console.log(recipesDisplayed)
+}
+
+
+
+
 
 function openDropdown(event) {
     const menuSelected = event.target.parentNode;
