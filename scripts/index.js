@@ -16,8 +16,6 @@ function init() {
 
 init();
 
-const menuIngredient = document.querySelector("#menu-ingredient");
-// menuIngredient.addEventListener("click", openDropdown);
 
 const filterMenus = document.querySelectorAll(".filter-menu");
 filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
@@ -43,12 +41,14 @@ function openDropdown(event) {
             menuSelected.style.marginRight = "550px";
         }
 
+        filterMenus.forEach(menu => menu.removeEventListener("click", openDropdown));
         document.addEventListener("click", closeModal)
 
         function closeModal(event) {
             if (!event.target.parentNode.className.includes("filter-menu")) {
                 menuDropdownSelected.style.display = "none";
                 filterMenus.forEach(menu => menu.style.marginRight = "0px");
+                filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
             } 
         }
     }   
