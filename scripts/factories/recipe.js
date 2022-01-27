@@ -112,11 +112,13 @@ class IngredientFactory {
     createIngredient() {
         const ingredientsItem = document.createElement("div");
         ingredientsItem.classList.add("ingredients-item");
-        const ingredientTitle = document.createElement("h3");
+        const ingredientTitle = document.createElement("p");
         ingredientTitle.textContent = `${this.ingredient}:`;
+        ingredientTitle.classList.add("ingredients-name");
         ingredientsItem.append(ingredientTitle);
         if (this.quantity != undefined) {
             const ingredientQuantity = document.createElement("p");
+            ingredientQuantity.classList.add("ingredients-qty");
             ingredientQuantity.textContent = this.getQuantity();
             ingredientsItem.append(ingredientQuantity);
             }

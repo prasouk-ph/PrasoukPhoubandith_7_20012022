@@ -283,19 +283,18 @@ main {
 
 .recipe-ingredients, .recipe-notice {
     font-size: 12px;
+    margin: 0;
 }
 
 .recipe-ingredients {
     width: 171px;
-    height: 109px;
-    margin: 0;
-    text-overflow: ellipsis;
+    height: 105px;
     overflow: hidden;
 }
 
 .recipe-notice {
     width: 171px;
-    height: 109px;
+    height: 100px;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
@@ -304,16 +303,17 @@ main {
     font-family: 'Roboto';
 }
 
-.recipe-notice p {
-    margin: 0;
-}
-
 .ingredients-item {
     display: flex;
     align-items: center;;
 }
 
-.ingredients-item p {
+.ingredients-name {
+    font-weight: 700;
+    word-break: break-all;
+}
+
+.ingredients-qty {
     padding-left: 3px;
 }
 
