@@ -55,10 +55,10 @@ main {
 
 .filter-container {
     display: flex;
-    gap: 20px;
+    gap: 17px;
 }
 
-.button-filter {
+.button-tag {
     border-radius: 5px;
     border: none;
     color: white;
@@ -70,15 +70,15 @@ main {
     cursor: pointer;
 }
 
-.button-filter-blue {
+.button-tag-blue {
     background: #3282F7;
 }
 
-.button-filter-green {
+.button-tag-green {
     background: #68D9A4;
 }
 
-.button-filter-red {
+.button-tag-red {
     background: #ED6454;
 }
 
@@ -112,6 +112,14 @@ main {
     background: #3282F7;
 }
 
+.filter-menu-green {
+    background: #68D9A4;
+}
+
+.filter-menu-red {
+    background: #ED6454;
+}
+
 
 
 .filter-menu-title {
@@ -138,7 +146,6 @@ main {
     top: 0px;
     left: 0;
     padding: 10px 20px;
-    background: #3282F7;
     z-index: 1;
     transform-origin: top left;
     animation-name: dropdownopen;
@@ -186,7 +193,7 @@ main {
 }
 
 #filter-search-bar::placeholder {
-    color: #7EB0F9;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 

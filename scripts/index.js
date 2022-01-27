@@ -16,25 +16,87 @@ function init() {
 
 init();
 
-const menuIngredient = document.querySelector(".filter-menu-ingredient");
-menuIngredient.addEventListener("click", openDropdown);
+const menuIngredient = document.querySelector("#menu-ingredient");
+// menuIngredient.addEventListener("click", openDropdown);
 
-function openDropdown() {
-    const menuIngredientDropdownContent = document.querySelector(".filter-menu-content");
-    const menuIngredientGap = document.querySelector(".filter-menu-ingredient");
-    const ingredientOptions = document.querySelectorAll(".option-item");
-    
-    menuIngredientDropdownContent.style.display = "block";
+const filterMenus = document.querySelectorAll(".filter-menu");
+filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
 
-    if (ingredientOptions.length == 1) {
-        menuIngredientDropdownContent.style.width = "180px";
-        menuIngredientGap.style.marginRight = "50px";
-    } else if (ingredientOptions.length == 2) {
-        menuIngredientDropdownContent.style.width = "450px";
-        menuIngredientGap.style.marginRight = "320px";
-    } else if (ingredientOptions.length >= 3) {
-        menuIngredientDropdownContent.style.width = "680px";
-        menuIngredientGap.style.marginRight = "550px";
+function openDropdown(event) {
+    const menuSelected = event.target.parentNode;
+
+    if (menuSelected.id.includes("menu")) {
+        const menuDropdownSelected =  menuSelected.querySelector(".filter-menu-content");
+        const menuOptionsContainerSelected =  menuSelected.querySelector(".filter-menu-options");
+        const menuOptionsQty = menuOptionsContainerSelected.querySelectorAll(".option-item");
+        
+        menuDropdownSelected.style.display = "block";
+
+        if (menuOptionsQty.length == 1) {
+            menuDropdownSelected.style.width = "180px";
+            menuSelected.style.marginRight = "50px";
+        } else if (menuOptionsQty.length == 2) {
+            menuDropdownSelected.style.width = "450px";
+            menuSelected.style.marginRight = "320px";
+        } else if (menuOptionsQty.length >= 3) {
+            menuDropdownSelected.style.width = "680px";
+            menuSelected.style.marginRight = "550px";
+        }
+    // menuIngredientDropdownContent.classList.add("active");
     }
-    menuIngredientDropdownContent.classList.add("active")
+}
+
+// document.addEventListener("click", closeModal)
+
+function closeModal(event) {
+    const menuIngredientDropdownContent = document.querySelector(".filter-menu-content");
+    const optionItems = document.querySelectorAll(".option-item");
+
+    // console.log(event.target.childNodes)
+    if (event.target == optionItems || event.target == menuIngredientDropdownContent || event.target == menuIngredientGap) {
+        alert("drop")
+        // menuIngredientGap.style.marginRight = "0px";
+        // menuIngredientDropdownContent.style.display = "none";
+      }
+    //   if (!event.target.className.includes("active") && event.target != option) {
+    //   && !event.target.matches(".filter-menu-content")
+
+    // if (event.target.className.includes("filter-menu-content", "filter-menu-title", "filter-menu-ingredient", "filter-menu-options")) {
+    //     menuIngredientDropdownContent.style.display = "block";
+    // } else {
+    //     menuIngredientGap.style.marginRight = "0px";
+    //     menuIngredientDropdownContent.style.display = "none";
+    // }
+}
+
+
+
+function closeDropdown() {
+    document.removeEventListener("keydown", closeDropdownWithKeyboard);
+    document.removeEventListener("click", closeDropdownOnClick);
+
+    options.style.display = "none";
+    currentValue.setAttribute("aria-expanded", "false");
+
+    // focus management
+    logoLink.tabIndex = 0;
+    contactButton.tabIndex = 0;
+    allMedia.forEach(media => media.tabIndex = 0);
+    mediaVideos.forEach(media => media.tabIndex  = 0);
+    likesCount.forEach(likes => likes.tabIndex  = 0);
+}
+
+
+function closeDropdownWithKeyboard(event) {
+if (event.key == "Escape") {
+    closeDropdown();
+}
+}
+
+function closeDropdownOnClick(event) {
+if (event.target.className.includes("current_value")) {
+    options.style.display = "block";
+} else {
+    closeDropdown();
+}
 }
