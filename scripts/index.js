@@ -42,13 +42,16 @@ function openDropdown(event) {
         }
 
         filterMenus.forEach(menu => menu.removeEventListener("click", openDropdown));
-        document.addEventListener("click", closeModal)
+        document.addEventListener("click", closeModal);
+
+        
 
         function closeModal(event) {
-            if (!event.target.parentNode.className.includes("filter-menu")) {
+            if (!menuSelected.contains(event.target)) { // if target is not a child of the menu selected
                 menuDropdownSelected.style.display = "none";
                 filterMenus.forEach(menu => menu.style.marginRight = "0px");
                 filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
+                document.removeEventListener("click", closeModal);
             } 
         }
     }   
