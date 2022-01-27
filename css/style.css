@@ -82,20 +82,7 @@ main {
     background: #ED6454;
 }
 
-.dropdown-menu {
-    height: 69px;
-    width: 170px;
-    font-size: 18px;
-}
 
-.dropdown-menu::after { /* arrow */
-    font-family: "Font Awesome 5 Free";
-    content: "\f078";
-    font-weight: bold;
-    font-size: 18px;
-    position: absolute;
-    right: 18px;
-}
 
 .filter-menu {
     border-radius: 5px;

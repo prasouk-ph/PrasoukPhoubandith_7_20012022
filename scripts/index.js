@@ -12,17 +12,16 @@ function init() {
         const recipeCard = recipeModel.createCard();
         cardContainer.appendChild(recipeCard);
     });
+
+    const filterMenus = document.querySelectorAll(".filter-menu");
+    filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
 }
 
 init();
 
-
-const filterMenus = document.querySelectorAll(".filter-menu");
-filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
-
 function openDropdown(event) {
     const menuSelected = event.target.parentNode;
-
+    
     if (menuSelected.id.includes("menu")) {
         const menuDropdownSelected =  menuSelected.querySelector(".filter-menu-content");
         const menuOptionsContainerSelected =  menuSelected.querySelector(".filter-menu-options");
@@ -41,16 +40,12 @@ function openDropdown(event) {
             menuSelected.style.marginRight = "550px";
         }
 
-        filterMenus.forEach(menu => menu.removeEventListener("click", openDropdown));
         document.addEventListener("click", closeModal);
-
-        
 
         function closeModal(event) {
             if (!menuSelected.contains(event.target)) { // if target is not a child of the menu selected
                 menuDropdownSelected.style.display = "none";
-                filterMenus.forEach(menu => menu.style.marginRight = "0px");
-                filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
+                menuSelected.style.marginRight = "0px";
                 document.removeEventListener("click", closeModal);
             } 
         }
