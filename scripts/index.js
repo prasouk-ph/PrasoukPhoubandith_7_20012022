@@ -27,8 +27,20 @@ function displayRecipe() {
 }
 
 function loadFilterItems() {
-    const recipesDisplayed = document.querySelectorAll(".card");
-    console.log(recipesDisplayed)
+    // create array from recipe in card container, with name slice recipes variable, keep only the recipe contains in the first array created
+    // or create a copy of recipes variable  and slice it according to recipe in card container, use recipe id, get values from new array
+    // const recipesDisplayed = Array.from(document.querySelectorAll(".card"));
+    // console.log(recipesDisplayed[0])
+    
+    // for every recipes, get values from key appliance/utensils/ingredients
+    const devices = [];
+
+    recipes.forEach(recipe => {
+        devices.push(recipe.appliance)
+    });
+    // const device = recipes[0].appliance
+    console.log(devices)
+    
 }
 
 
