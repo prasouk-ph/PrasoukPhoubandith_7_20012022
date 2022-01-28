@@ -33,13 +33,42 @@ function loadFilterItems() {
     // console.log(recipesDisplayed[0])
     
     // for every recipes, get values from key appliance/utensils/ingredients
-    const devices = [];
+    const recipesDisplayed = recipes;
+    const optionsContainer = document.querySelector(".filter-menu-options");
 
-    recipes.forEach(recipe => {
-        devices.push(recipe.appliance)
+
+    const applianceWithoutDuplicate = [];
+    recipesDisplayed.forEach(recipe => {
+        applianceWithoutDuplicate.push(recipe.appliance)
     });
-    // const device = recipes[0].appliance
-    console.log(devices)
+    const appliancesWithoutDuplicate = Array.from(new Set(applianceWithoutDuplicate));
+    appliancesWithoutDuplicate.forEach(appliance => {
+        const applianceModel = new UstensilFactory(appliance);
+        const applianceDOM = applianceModel.createElementDOM();
+        optionsContainer.append(applianceDOM);
+        }
+    )
+
+
+    const ustensils = [];
+    recipesDisplayed.forEach(recipe => {
+        recipe.ustensils.forEach(ustensil => {
+            ustensils.push(ustensil)
+        })
+    });
+    const ustensilsWithoutDuplicate = Array.from(new Set(ustensils));
+    
+
+
+    const ingredients = [];
+    recipesDisplayed.forEach(recipe => {
+        recipe.ingredients.forEach(ingredient => {
+            ingredients.push(ingredient.ingredient)
+        })
+    });
+    const ingredientsWithoutDuplicate = Array.from(new Set(ingredients));
+
+    // console.log(optionsContainer, applianceWithoutDuplicate, appliancesWithoutDuplicate, ustensils, ustensilsWithoutDuplicate, ingredients, ingredientsWithoutDuplicate)
     
 }
 
