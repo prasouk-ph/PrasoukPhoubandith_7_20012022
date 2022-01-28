@@ -157,7 +157,7 @@ main {
 
 .option-item {
     width: 205px;
-    height: 22px;
+    min-height: 22px;
     list-style: none;
     padding: 5px 10px;
 }

@@ -34,21 +34,31 @@ function loadFilterItems() {
     
     // for every recipes, get values from key appliance/utensils/ingredients
     const recipesDisplayed = recipes;
-    const optionsContainer = document.querySelector(".filter-menu-options");
-
+    
+    
+    // MENU APPLIANCE
+    const menuAppliance = document.querySelector("#menu-device");
+    const menuApplianceContainer = menuAppliance.querySelector(".filter-menu-content");
 
     const applianceWithoutDuplicate = [];
     recipesDisplayed.forEach(recipe => {
         applianceWithoutDuplicate.push(recipe.appliance)
     });
     const appliancesWithoutDuplicate = Array.from(new Set(applianceWithoutDuplicate));
+    const applianceFilterOptionsContainer = document.createElement("div");
+    applianceFilterOptionsContainer.classList.add("filter-menu-options");
     appliancesWithoutDuplicate.forEach(appliance => {
-        const applianceModel = new UstensilFactory(appliance);
+        const applianceModel = new ApplianceFilterFactory(appliance);
         const applianceDOM = applianceModel.createElementDOM();
-        optionsContainer.append(applianceDOM);
+        applianceFilterOptionsContainer.append(applianceDOM);
         }
     )
+    menuApplianceContainer.append(applianceFilterOptionsContainer);
 
+
+    // MENU USTENSIL
+    const menuUstensil = document.querySelector("#menu-utensils");
+    const menuUstensilContainer = menuUstensil.querySelector(".filter-menu-content");
 
     const ustensils = [];
     recipesDisplayed.forEach(recipe => {
@@ -57,7 +67,20 @@ function loadFilterItems() {
         })
     });
     const ustensilsWithoutDuplicate = Array.from(new Set(ustensils));
-    
+    const ustensilsFilterOptionsContainer = document.createElement("div");
+    ustensilsFilterOptionsContainer.classList.add("filter-menu-options");
+    ustensilsWithoutDuplicate.forEach(ustensil => {
+        const ustensilModel = new UstensilFilterFactory(ustensil);
+        const ustensilDOM = ustensilModel.createElementDOM();
+        ustensilsFilterOptionsContainer.append(ustensilDOM);
+        }
+    )
+    menuUstensilContainer.append(ustensilsFilterOptionsContainer);
+
+
+    // MENU INGREDIENT
+    const menuIngredient = document.querySelector("#menu-ingredients");
+    const menuIngredientContainer = menuIngredient.querySelector(".filter-menu-content");
 
 
     const ingredients = [];
@@ -67,9 +90,15 @@ function loadFilterItems() {
         })
     });
     const ingredientsWithoutDuplicate = Array.from(new Set(ingredients));
-
-    // console.log(optionsContainer, applianceWithoutDuplicate, appliancesWithoutDuplicate, ustensils, ustensilsWithoutDuplicate, ingredients, ingredientsWithoutDuplicate)
-    
+    const ingredientsFilterOptionsContainer = document.createElement("div");
+    ingredientsFilterOptionsContainer.classList.add("filter-menu-options");
+    ingredientsWithoutDuplicate.forEach(ingredient => {
+        const ingredientModel = new IngredientFilterFactory(ingredient);
+        const ingredientDOM = ingredientModel.createElementDOM();
+        ingredientsFilterOptionsContainer.append(ingredientDOM);
+        }
+    )
+    menuIngredientContainer.append(ingredientsFilterOptionsContainer);    
 }
 
 
