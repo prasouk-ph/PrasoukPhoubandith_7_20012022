@@ -48,7 +48,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    height: 121px;
+    min-height: 121px;
 }
 
 .filter-container {
