@@ -100,12 +100,16 @@ function loadFilterItems() {
     )
     menuIngredientContainer.append(ingredientsFilterOptionsContainer);
 
+
+    // Tag interaction
     const optionItems = document.querySelectorAll(".option-item");
     optionItems.forEach(item => item.addEventListener("click", addTag));
 
     function addTag(event) {
         const tagContainer = document.querySelector(".tag-container");
         const optionsContainer = event.target.parentNode;
+        const menuSelected = optionsContainer.parentNode.parentNode;
+        const menuDropdownSelected = optionsContainer.parentNode;
         const addedTag = event.target;
 
         const tag = document.createElement("button");
@@ -126,6 +130,20 @@ function loadFilterItems() {
         addedTag.classList.add("hide");
         tag.addEventListener("click", removeTag);
 
+
+        const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
+        if (optionsVisible.length <= 1) {
+            menuDropdownSelected.style.width = "180px";
+            menuSelected.style.marginRight = "50px";
+        } else if (optionsVisible.length == 2) {
+            menuDropdownSelected.style.width = "450px";
+            menuSelected.style.marginRight = "320px";
+        } else if (optionsVisible.length >= 3) {
+            menuDropdownSelected.style.width = "680px";
+            menuSelected.style.marginRight = "550px";
+        }
+
+
         function removeTag(event) {
             const tagToremove = event.target;
 
@@ -145,11 +163,11 @@ function openDropdown(event) {
     if (menuSelected.id.includes("menu")) {
         const menuDropdownSelected =  menuSelected.querySelector(".filter-menu-content");
         const menuOptionsContainerSelected =  menuSelected.querySelector(".filter-menu-options");
-        const menuOptionsQty = menuOptionsContainerSelected.querySelectorAll(".option-item");
+        const menuOptionsQty = menuOptionsContainerSelected.querySelectorAll(":not(.hide)");
         
         menuDropdownSelected.style.display = "block";
 
-        if (menuOptionsQty.length == 1) {
+        if (menuOptionsQty.length <= 1) {
             menuDropdownSelected.style.width = "180px";
             menuSelected.style.marginRight = "50px";
         } else if (menuOptionsQty.length == 2) {
