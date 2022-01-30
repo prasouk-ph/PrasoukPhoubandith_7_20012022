@@ -56,16 +56,32 @@ main {
     gap: 17px;
 }
 
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 .button-tag {
+    min-height: 37px;
+    min-width: 107px;
     border-radius: 5px;
     border: none;
     color: white;
     position: relative;
     text-align: left;
-    padding-left: 20px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     cursor: pointer;
+}
+
+.button-tag::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f057";
+    font-weight: 400;
+    font-size: 18px;
+    margin-left: 13px;
 }
 
 .button-tag-blue {
@@ -79,8 +95,6 @@ main {
 .button-tag-red {
     background: #ED6454;
 }
-
-
 
 .filter-menu {
     border-radius: 5px;
@@ -181,25 +195,6 @@ main {
 
 #filter-search-bar::placeholder {
     color: rgba(255, 255, 255, 0.5);
-}
-
-.tag-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.button-tag {
-    height: 37px;
-    width: 107px;
-}
-
-.button-tag::after {
-    font-family: "Font Awesome 5 Free";
-    content: "\f057";
-    font-weight: 400;
-    font-size: 18px;
-    margin-left: 13px;
 }
 
 /* recipe section */

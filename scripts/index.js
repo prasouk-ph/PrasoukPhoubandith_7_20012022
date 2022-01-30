@@ -98,7 +98,27 @@ function loadFilterItems() {
         ingredientsFilterOptionsContainer.append(ingredientDOM);
         }
     )
-    menuIngredientContainer.append(ingredientsFilterOptionsContainer);    
+    menuIngredientContainer.append(ingredientsFilterOptionsContainer);
+
+    const optionItems = document.querySelectorAll(".option-item");
+    optionItems.forEach(item => item.addEventListener("click", addTag));
+
+    function addTag(event) {
+        const tagContainer = document.querySelector(".tag-container");
+        const tag = document.createElement("button")
+        tag.classList.add("button-tag")
+        if (event.target.parentNode.parentNode.className.includes("green")) {
+            tag.classList.add("button-tag-green");
+        }
+        else if (event.target.parentNode.parentNode.className.includes("red")) {
+            tag.classList.add("button-tag-red");
+        }
+        else if (event.target.parentNode.parentNode.className.includes("blue")) {
+                tag.classList.add("button-tag-blue")
+        }
+        tag.textContent = event.target.textContent;
+        tagContainer.append(tag)
+    }
 }
 
 
