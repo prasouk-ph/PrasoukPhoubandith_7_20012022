@@ -181,19 +181,19 @@ main {
     border-radius: 5px;
 }
 
-#filter-search-bar {
+.tag-search-bar {
     background-color: transparent;
     border: none;
     outline: none;
     min-width: 170px;
-    width: 100%;
+    width: 95%;
     margin: 16px 0;
     position: relative;
     color: white;
     font-weight: bold;
 }
 
-#filter-search-bar::placeholder {
+.tag-search-bar::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
 

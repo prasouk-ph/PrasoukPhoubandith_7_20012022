@@ -1,9 +1,14 @@
+const recipesDisplayed = recipes;
+
 function init() {
     displayRecipe();
     loadFilterItems();
 
     const filterMenus = document.querySelectorAll(".filter-menu");
     filterMenus.forEach(menu => menu.addEventListener("click", openDropdown));
+
+    const tagSearchBar = document.querySelectorAll(".tag-search-bar");
+    tagSearchBar.forEach(searchBar => searchBar.addEventListener("input", filterTags));
 }
 
 init();
@@ -33,11 +38,11 @@ function loadFilterItems() {
     // console.log(recipesDisplayed[0])
     
     // for every recipes, get values from key appliance/utensils/ingredients
-    const recipesDisplayed = recipes;
+    // const recipesDisplayed = recipes;
     
     
     // MENU APPLIANCE
-    const menuAppliance = document.querySelector("#menu-device");
+    const menuAppliance = document.querySelector("#menu-appliance");
     const menuApplianceContainer = menuAppliance.querySelector(".filter-menu-content");
 
     const applianceWithoutDuplicate = [];
@@ -57,7 +62,7 @@ function loadFilterItems() {
 
 
     // MENU USTENSIL
-    const menuUstensil = document.querySelector("#menu-utensils");
+    const menuUstensil = document.querySelector("#menu-ustensils");
     const menuUstensilContainer = menuUstensil.querySelector(".filter-menu-content");
 
     const ustensils = [];
@@ -188,4 +193,57 @@ function openDropdown(event) {
             } 
         }
     }   
+}
+
+
+function filterTags(event) {
+    // console.log("test");
+    const inputValue = event.target.value.toLowerCase();
+    const optionsContainer = event.target.parentNode.querySelector(".filter-menu-options");
+    const recipesIncludingTagSearched = recipesDisplayed.filter(recipe => recipe.appliance.toLowerCase().includes(inputValue));
+    const tagsGenerate = [];
+    
+    recipesIncludingTagSearched.forEach(recipe => tagsGenerate.push(recipe.appliance))
+
+    const tagsGenerateWithoutDuplicate = Array.from(new Set(tagsGenerate));
+
+    // console.log(tagsGenerate);
+
+    optionsContainer.textContent = "";
+    
+    if (inputValue.length >= 2 && recipesIncludingTagSearched.length != 0 && recipesIncludingTagSearched[0].appliance.toLowerCase().includes(inputValue)) {
+        // const applianceModel = new ApplianceFilterFactory(recipesIncludingTagSearched[0].appliance);
+        // const applianceDOM = applianceModel.createElementDOM();
+        // optionsContainer.append(applianceDOM);
+        tagsGenerateWithoutDuplicate.forEach(appliance => {
+            const applianceModel = new IngredientFilterFactory(appliance);
+            const applianceDOM = applianceModel.createElementDOM();
+            optionsContainer.append(applianceDOM);
+        })
+    } else {
+        const applianceWithoutDuplicate = [];
+        recipesDisplayed.forEach(recipe => {
+            applianceWithoutDuplicate.push(recipe.appliance)
+        });
+        const appliancesWithoutDuplicate = Array.from(new Set(applianceWithoutDuplicate));
+        appliancesWithoutDuplicate.forEach(appliance => {
+            const applianceModel = new ApplianceFilterFactory(appliance);
+            const applianceDOM = applianceModel.createElementDOM();
+            optionsContainer.append(applianceDOM);
+        })
+    }
+
+    const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
+    const menuSelected = optionsContainer.parentNode.parentNode;
+    const menuDropdownSelected = optionsContainer.parentNode;
+    if (optionsVisible.length <= 1) {
+        menuDropdownSelected.style.width = "180px";
+        menuSelected.style.marginRight = "50px";
+    } else if (optionsVisible.length == 2) {
+        menuDropdownSelected.style.width = "450px";
+        menuSelected.style.marginRight = "320px";
+    } else if (optionsVisible.length >= 3) {
+        menuDropdownSelected.style.width = "680px";
+        menuSelected.style.marginRight = "550px";
+    }
 }
