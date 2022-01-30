@@ -105,19 +105,33 @@ function loadFilterItems() {
 
     function addTag(event) {
         const tagContainer = document.querySelector(".tag-container");
-        const tag = document.createElement("button")
-        tag.classList.add("button-tag")
-        if (event.target.parentNode.parentNode.className.includes("green")) {
+        const optionsContainer = event.target.parentNode;
+        const addedTag = event.target;
+
+        const tag = document.createElement("button");
+        tag.classList.add("button-tag");
+
+        if (optionsContainer.parentNode.className.includes("green")) {
             tag.classList.add("button-tag-green");
         }
-        else if (event.target.parentNode.parentNode.className.includes("red")) {
+        else if (optionsContainer.parentNode.className.includes("red")) {
             tag.classList.add("button-tag-red");
         }
-        else if (event.target.parentNode.parentNode.className.includes("blue")) {
-                tag.classList.add("button-tag-blue")
+        else if (optionsContainer.parentNode.className.includes("blue")) {
+                tag.classList.add("button-tag-blue");
         }
+
         tag.textContent = event.target.textContent;
-        tagContainer.append(tag)
+        tagContainer.append(tag);
+        addedTag.classList.add("hide");
+        tag.addEventListener("click", removeTag);
+
+        function removeTag(event) {
+            const tagToremove = event.target;
+
+            tagContainer.removeChild(tagToremove);
+            addedTag.classList.remove("hide");
+        }
     }
 }
 
