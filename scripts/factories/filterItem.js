@@ -46,7 +46,7 @@ class TagMenu {
             }
         });
 
-        const tagsWithoutDuplicate = Array.from(new Set(tags));
+        const tagsWithoutDuplicate = Array.from(new Set(tags)); // Set allows to remove duplicate from array
 
         const OptionsContainer = document.createElement("ul");
         OptionsContainer.classList.add("filter-menu-options");
@@ -92,10 +92,12 @@ class TagMenu {
             }
     
             tagButton.textContent = tagOption.textContent;
-            tagContainer.append(tagButton);
-            tagOption.classList.add("hide");
             tagButton.addEventListener("click", removeTag);
-    
+
+            tagContainer.append(tagButton);
+            
+            tagOption.classList.add("hide");
+
     
             const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
             if (optionsVisible.length <= 1) {
@@ -114,6 +116,7 @@ class TagMenu {
                 const tagContainer = document.querySelector(".tag-container");
                 
                 tagContainer.removeChild(tagButton);
+                
                 tagOption.classList.remove("hide");
             }
         }

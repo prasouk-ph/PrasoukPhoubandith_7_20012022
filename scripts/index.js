@@ -1,9 +1,11 @@
 const recipesDisplayed = recipes;
 
+
 function init() {
-    getTagMenus();
+    getTagMenus(recipesDisplayed);
     displayRecipes(recipesDisplayed);
 }
+
 
 init();
 
@@ -29,7 +31,7 @@ function displayRecipes(recipes) {
 }
 
 
-function getTagMenus() {
+function getTagMenus(recipes) {
     const main = document.querySelector("main");
 
     const sectionFilter =  document.createElement("section");
@@ -41,13 +43,13 @@ function getTagMenus() {
     const filterContainer =  document.createElement("div");
     filterContainer.classList.add("filter-container");
 
-    const menuIngredients = new TagMenu("Ingrédients", "blue", "ingredients", recipesDisplayed);
+    const menuIngredients = new TagMenu("Ingrédients", "blue", "ingredients", recipes);
     const menuIngredientsDOM = menuIngredients.getElementDOM();
     
-    const menuAppliances = new TagMenu("Appareils", "green", "appliance", recipesDisplayed);
+    const menuAppliances = new TagMenu("Appareils", "green", "appliance", recipes);
     const menuAppliancesDOM = menuAppliances.getElementDOM();
     
-    const menuUstensils = new TagMenu("Ustensiles", "red", "ustensils", recipesDisplayed);
+    const menuUstensils = new TagMenu("Ustensiles", "red", "ustensils", recipes);
     const menuUstensilsDOM = menuUstensils.getElementDOM();
     
     filterContainer.append(menuIngredientsDOM, menuAppliancesDOM, menuUstensilsDOM);
