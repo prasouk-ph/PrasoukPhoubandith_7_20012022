@@ -85,7 +85,7 @@ class TagMenu {
                 tagButton.classList.add("button-tag-green");
             }
             else if (optionsContainer.parentNode.className.includes("red")) {
-                tag.classList.add("button-tag-red");
+                tagButton.classList.add("button-tag-red");
             }
             else if (optionsContainer.parentNode.className.includes("blue")) {
                     tagButton.classList.add("button-tag-blue");
