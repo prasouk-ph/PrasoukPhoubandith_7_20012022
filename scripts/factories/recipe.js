@@ -10,37 +10,46 @@ class RecipeFactory {
         this._ustensils = recipe.ustensils;
     }
 
+
     getId() {
         return this._id;
     }
+
 
     getName() {
         return this._name;
     }
 
+
     getServings() {
         return this._servings;
     }
+
 
     getIngredients() {
         return this._ingredients;
     }
 
+
     getTime() {
         return this._time;
     }
+
 
     getDescription() {
         return this._description;
     }
 
+
     getAppliance() {
         return this._appliance;
     }
 
+
     getUstensils() {
         return this._ustensils;
     }
+
 
     createCard() {
         const card = document.createElement("div");
@@ -48,8 +57,8 @@ class RecipeFactory {
 
         const cardPicture = document.createElement("div");
         cardPicture.classList.add("card-picture");
-        const recipePicture = document.createElement("img");
-        recipePicture.classList.add("recipe-picture");
+        // const recipePicture = document.createElement("img");
+        // recipePicture.classList.add("recipe-picture");
 
         const cardContent = document.createElement("div");
         cardContent.classList.add("card-content");
@@ -80,7 +89,7 @@ class RecipeFactory {
         recipeNotice.textContent = this._description;
 
 
-        cardPicture.append(recipePicture);
+        // cardPicture.append(recipePicture);
         contentHeader.append(recipeTitle, recipeDuration);
         cardContent.append(contentHeader, contentDetails);
         contentDetails.append(recipeIngredientsContainer, recipeNotice);
@@ -96,6 +105,7 @@ class IngredientFactory {
         this.quantity = data.quantity;
         this.unit = data.unit;
     }
+    
 
     getQuantity() {
         if (this.quantity != undefined && this.unit != undefined) {
@@ -108,6 +118,7 @@ class IngredientFactory {
             return "";
         }
     }
+    
 
     createIngredient() {
         const ingredientsItem = document.createElement("div");

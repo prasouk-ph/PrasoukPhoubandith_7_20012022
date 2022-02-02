@@ -55,60 +55,77 @@ function getTagMenus(recipes) {
     filterContainer.append(menuIngredientsDOM, menuAppliancesDOM, menuUstensilsDOM);
     sectionFilter.append(tagContainer, filterContainer);
     main.append(sectionFilter);
+
+
+    const searchBars = document.querySelectorAll(".tag-search-bar");
+    searchBars.forEach(searchBar => searchBar.addEventListener("input", filterTags));
 }
 
 
 function filterTags(event) {
-    // console.log("test");
     const inputValue = event.target.value.toLowerCase();
     const optionsContainer = event.target.parentNode.querySelector(".filter-menu-options");
-    const recipesIncludingTagSearched = recipesDisplayed.filter(recipe => recipe.appliance.toLowerCase().includes(inputValue));
-    const tagsGenerate = [];
+    const menuSelected = optionsContainer.parentNode.parentNode;
+    const tagsType = getTagsType();
+    const tagsFromRecipesDisplay = [];
+
+    recipesDisplayed.forEach(recipe => {
+        if (!Array.isArray(recipe[tagsType])) {
+            tagsFromRecipesDisplay.push(recipe[tagsType]);
+        } else {
+            recipe[tagsType].forEach(tagItem => {
+                if (typeof tagItem === "object") {
+                    tagsFromRecipesDisplay.push(tagItem.ingredient);
+                } else {
+                    tagsFromRecipesDisplay.push(tagItem);
+                }
+            });
+        }
+    });
+
+    const tagsFromRecipesDisplayWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplay));
     
-    recipesIncludingTagSearched.forEach(recipe => tagsGenerate.push(recipe.appliance))
+    const tagsCorrespondingToInput = [];
 
-    const tagsGenerateWithoutDuplicate = Array.from(new Set(tagsGenerate));
-
-    // console.log(tagsGenerate);
+    tagsFromRecipesDisplayWithoutDuplicate.forEach(tag => {
+        if (tag.toLowerCase().includes(inputValue)) {
+            tagsCorrespondingToInput.push(tag)
+        }
+    });
 
     optionsContainer.textContent = "";
-    
-    if (inputValue.length >= 2 && recipesIncludingTagSearched.length != 0 && recipesIncludingTagSearched[0].appliance.toLowerCase().includes(inputValue)) {
-        // const applianceModel = new ApplianceFilterFactory(recipesIncludingTagSearched[0].appliance);
-        // const applianceDOM = applianceModel.createElementDOM();
-        // optionsContainer.append(applianceDOM);
-        tagsGenerateWithoutDuplicate.forEach(appliance => {
-            const applianceModel = new IngredientFilterFactory(appliance);
-            const applianceDOM = applianceModel.createElementDOM();
-            optionsContainer.append(applianceDOM);
-        })
-    } else {
-        const applianceWithoutDuplicate = [];
-        recipesDisplayed.forEach(recipe => {
-            applianceWithoutDuplicate.push(recipe.appliance)
-        });
-        const appliancesWithoutDuplicate = Array.from(new Set(applianceWithoutDuplicate));
-        appliancesWithoutDuplicate.forEach(appliance => {
-            const applianceModel = new ApplianceFilterFactory(appliance);
-            const applianceDOM = applianceModel.createElementDOM();
-            optionsContainer.append(applianceDOM);
+
+    if (tagsCorrespondingToInput.length > 0) {
+        tagsCorrespondingToInput.forEach(tag => {
+            const tagModel = new TagFactory(tag);
+            const tagDOM = tagModel.getElementDOM();
+            optionsContainer.append(tagDOM);
         })
     }
 
-    const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
-    const menuSelected = optionsContainer.parentNode.parentNode;
-    const menuDropdownSelected = optionsContainer.parentNode;
-    if (optionsVisible.length <= 1) {
-        menuDropdownSelected.style.width = "180px";
+    const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
+    const menuContent = optionsContainer.parentNode;
+    if (menuOptionsQty.length <= 1) {
+        menuContent.style.width = "180px";
         menuSelected.style.marginRight = "50px";
-    } else if (optionsVisible.length == 2) {
-        menuDropdownSelected.style.width = "450px";
+    } else if (menuOptionsQty.length == 2) {
+        menuContent.style.width = "450px";
         menuSelected.style.marginRight = "320px";
-    } else if (optionsVisible.length >= 3) {
-        menuDropdownSelected.style.width = "680px";
+    } else if (menuOptionsQty.length >= 3) {
+        menuContent.style.width = "680px";
         menuSelected.style.marginRight = "550px";
     }
-}
 
+
+    function getTagsType() {
+        if (menuSelected.id == "menu-appliance") {
+            return "appliance";
+        } else if (menuSelected.id == "menu-ustensils") {
+            return "ustensils";
+        } else if (menuSelected.id == "menu-ingredients") {
+            return "ingredients";
+        }
+    }
+}
 
 

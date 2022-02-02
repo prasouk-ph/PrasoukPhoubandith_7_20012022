@@ -188,14 +188,23 @@ main {
     min-width: 170px;
     width: 95%;
     margin: 16px 0;
+    padding-right: 20px;
     position: relative;
     color: white;
     font-weight: bold;
+    
 }
+
+.tag-search-bar::-webkit-search-cancel-button {
+    display: none;
+}
+
 
 .tag-search-bar::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
+
+
 
 /* recipe section */
 .card-container {
