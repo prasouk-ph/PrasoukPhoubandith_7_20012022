@@ -67,6 +67,7 @@ class TagMenu {
         menuContent.append(searchBar, OptionsContainer);
 
         menu.addEventListener("click", openDropdown);
+        searchBar.addEventListener("input", filterTags);
 
 
         // functions
@@ -98,6 +99,74 @@ class TagMenu {
             }
         }
 
+
+        function filterTags(event) {
+            const inputValue = event.target.value.toLowerCase();
+            const optionsContainer = event.target.parentNode.querySelector(".filter-menu-options");
+            const menuSelected = optionsContainer.parentNode.parentNode;
+            const tagsType = getTagsType();
+            const tagsFromRecipesDisplay = [];
+            
+        
+            recipes.forEach(recipe => {
+                if (!Array.isArray(recipe[tagsType])) { // when tag type is appliance
+                    tagsFromRecipesDisplay.push(recipe[tagsType]);
+                } else {
+                    recipe[tagsType].forEach(tagItem => {
+                        if (typeof tagItem === "object") { // when tag type is ingredients
+                            tagsFromRecipesDisplay.push(tagItem.ingredient);
+                        } else {
+                            tagsFromRecipesDisplay.push(tagItem); // when tag type is ustensils
+                        }
+                    });
+                }
+            });
+        
+            const tagsFromRecipesDisplayWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplay));
+            
+            const tagsCorrespondingToInput = [];
+        
+            tagsFromRecipesDisplayWithoutDuplicate.forEach(tag => {
+                if (tag.toLowerCase().includes(inputValue)) {
+                    tagsCorrespondingToInput.push(tag)
+                }
+            });
+        
+            optionsContainer.textContent = "";
+        
+            if (tagsCorrespondingToInput.length > 0) {
+                tagsCorrespondingToInput.forEach(tag => {
+                    const tagModel = new TagFactory(tag);
+                    const tagDOM = tagModel.getElementDOM();
+                    optionsContainer.append(tagDOM);
+                })
+            }
+        
+            const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
+            const menuContent = optionsContainer.parentNode;
+            if (menuOptionsQty.length <= 1) {
+                menuContent.style.width = "180px";
+                menuSelected.style.marginRight = "50px";
+            } else if (menuOptionsQty.length == 2) {
+                menuContent.style.width = "450px";
+                menuSelected.style.marginRight = "320px";
+            } else if (menuOptionsQty.length >= 3) {
+                menuContent.style.width = "680px";
+                menuSelected.style.marginRight = "550px";
+            }
+        
+        
+            function getTagsType() {
+                if (menuSelected.id == "menu-appliance") {
+                    return "appliance";
+                } else if (menuSelected.id == "menu-ustensils") {
+                    return "ustensils";
+                } else if (menuSelected.id == "menu-ingredients") {
+                    return "ingredients";
+                }
+            }
+        }
+
         return menu;
     }    
 }
@@ -113,7 +182,8 @@ class TagFactory {
         li.classList.add("option-item");
         li.textContent = this.name;
 
-        li.addEventListener("click", addTag)
+        li.addEventListener("click", addTag);
+
         return li;
 
 
@@ -129,12 +199,10 @@ class TagFactory {
     
             if (optionsContainer.parentNode.className.includes("green")) {
                 tagButton.classList.add("button-tag-green");
-            }
-            else if (optionsContainer.parentNode.className.includes("red")) {
+            } else if (optionsContainer.parentNode.className.includes("red")) {
                 tagButton.classList.add("button-tag-red");
-            }
-            else if (optionsContainer.parentNode.className.includes("blue")) {
-                    tagButton.classList.add("button-tag-blue");
+            } else if (optionsContainer.parentNode.className.includes("blue")) {
+                tagButton.classList.add("button-tag-blue");
             }
     
             tagButton.textContent = tagOption.textContent;
@@ -144,7 +212,7 @@ class TagFactory {
             
             tagOption.classList.add("hide");
 
-    
+            // to update the options container size
             const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
             if (optionsVisible.length <= 1) {
                 menuDropdownSelected.style.width = "180px";
