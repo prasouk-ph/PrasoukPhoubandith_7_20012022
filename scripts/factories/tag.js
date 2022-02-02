@@ -58,7 +58,6 @@ class TagMenu {
             const tagModel = new TagFactory(tagOption);
             const tagDOM = tagModel.getElementDOM();
             OptionsContainer.append(tagDOM);
-            tagDOM.addEventListener("click", addTag);
             }
         )
 
@@ -71,6 +70,53 @@ class TagMenu {
 
 
         // functions
+        function openDropdown() {
+            const menuOptionsQty = OptionsContainer.querySelectorAll(":not(.hide)");
+            
+            menuContent.style.display = "block";
+
+            if (menuOptionsQty.length <= 1) {
+                menuContent.style.width = "180px";
+                menu.style.marginRight = "50px";
+            } else if (menuOptionsQty.length == 2) {
+                menuContent.style.width = "450px";
+                menu.style.marginRight = "320px";
+            } else if (menuOptionsQty.length >= 3) {
+                menuContent.style.width = "680px";
+                menu.style.marginRight = "550px";
+            }
+
+            document.addEventListener("click", closeDropdown);
+
+
+            function closeDropdown(event) {
+                if (!menu.contains(event.target)) { // if target is not a child of the menu selected
+                    menuContent.style.display = "none";
+                    menu.style.marginRight = "0px";
+                    document.removeEventListener("click", closeDropdown);
+                } 
+            }
+        }
+
+        return menu;
+    }    
+}
+
+
+class TagFactory {
+    constructor(ingredient) {
+        this.name = ingredient;
+    }
+
+    getElementDOM() {
+        const li = document.createElement("li");
+        li.classList.add("option-item");
+        li.textContent = this.name;
+
+        li.addEventListener("click", addTag)
+        return li;
+
+
         function addTag(event) {
             const tagContainer = document.querySelector(".tag-container");
             const optionsContainer = event.target.parentNode;
@@ -120,50 +166,5 @@ class TagMenu {
                 tagOption.classList.remove("hide");
             }
         }
-
-
-        function openDropdown() {
-            const menuOptionsQty = OptionsContainer.querySelectorAll(":not(.hide)");
-            
-            menuContent.style.display = "block";
-
-            if (menuOptionsQty.length <= 1) {
-                menuContent.style.width = "180px";
-                menu.style.marginRight = "50px";
-            } else if (menuOptionsQty.length == 2) {
-                menuContent.style.width = "450px";
-                menu.style.marginRight = "320px";
-            } else if (menuOptionsQty.length >= 3) {
-                menuContent.style.width = "680px";
-                menu.style.marginRight = "550px";
-            }        
-
-            document.addEventListener("click", closeDropdown);
-
-
-            function closeDropdown(event) {
-                if (!menu.contains(event.target)) { // if target is not a child of the menu selected
-                    menuContent.style.display = "none";
-                    menu.style.marginRight = "0px";
-                    document.removeEventListener("click", closeDropdown);
-                } 
-            }
-        }
-
-        return menu;
-    }    
-}
-
-
-class TagFactory {
-    constructor(ingredient) {
-        this.name = ingredient;
-    }
-
-    getElementDOM() {
-        const li = document.createElement("li");
-        li.classList.add("option-item");
-        li.textContent = this.name;
-        return li;
     }
 }
