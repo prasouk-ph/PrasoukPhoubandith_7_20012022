@@ -88,17 +88,26 @@ function filterRecipes(event) {
     menuAppliancesOptions.textContent = "";
     menuUstensilsOptions.textContent = "";
     
+    
     if (inputValue.length >= 3) {
-        displayRecipes(recipesCorrespondingToInput);
-        getTagsOptions(recipesCorrespondingToInput, "appliance")
-        getTagsOptions(recipesCorrespondingToInput, "ingredients")
-        getTagsOptions(recipesCorrespondingToInput, "ustensils")
-        recipesDisplayed = recipesCorrespondingToInput;
+            displayRecipes(recipesCorrespondingToInput);
+            getTagsOptions(recipesCorrespondingToInput, "appliance")
+            getTagsOptions(recipesCorrespondingToInput, "ingredients")
+            getTagsOptions(recipesCorrespondingToInput, "ustensils")
+
+            recipesDisplayed = recipesCorrespondingToInput;
+
+            if (recipesCorrespondingToInput.length <= 0) {
+                const message = document.createElement("p");
+                message.textContent = "Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+                cardContainer.append(message)
+            }            
     } else {
         displayRecipes(recipes);
         getTagsOptions(recipes, "appliance")
         getTagsOptions(recipes, "ingredients")
         getTagsOptions(recipes, "ustensils")
+        
         recipesDisplayed = recipes;
     }
 }
