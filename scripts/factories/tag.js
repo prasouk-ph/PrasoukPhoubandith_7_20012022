@@ -1,8 +1,8 @@
 class TagMenu {
-    constructor(menuTitle, menuColor, tagType, recipes) {
+    constructor(menuTitle, menuColor, tagsType, recipes) {
         this.menuTitle = menuTitle;
         this.menuColor = menuColor;
-        this.tagType = tagType;
+        this.tagsType = tagsType;
         this.recipes = recipes;
     }
     
@@ -10,7 +10,7 @@ class TagMenu {
     getElementDOM() {
         // create tag elements
         const menu = document.createElement("div");
-        menu.id = `menu-${this.tagType}`;
+        menu.id = `menu-${this.tagsType}`;
         menu.classList.add("filter-menu", `filter-menu-${this.menuColor}`);
 
         const menuTitle = document.createElement("div");
@@ -21,22 +21,22 @@ class TagMenu {
         menuContent.classList.add("filter-menu-content", "filter-menu", `filter-menu-${this.menuColor}`);
 
         const searchBar = document.createElement("input");
-        searchBar.id = `${this.tagType}-search-bar`;
+        searchBar.id = `${this.tagsType}-search-bar`;
         searchBar.classList.add("tag-search-bar");
         searchBar.setAttribute("type", "search");
         searchBar.setAttribute("name", "filter-search");
-        searchBar.setAttribute("placeholder", `Rechercher un ${this.tagType}`);
+        searchBar.setAttribute("placeholder", `Rechercher un ${this.tagsType}`);
         
 
         // get tag options
         const tags = [];
 
         this.recipes.forEach(recipe => {
-            if (!Array.isArray(recipe[`${this.tagType}`])) {
-                tags.push(recipe[`${this.tagType}`]);
+            if (!Array.isArray(recipe[`${this.tagsType}`])) {
+                tags.push(recipe[`${this.tagsType}`]);
             }
             else {
-                recipe[`${this.tagType}`].forEach(tagOption => {
+                recipe[`${this.tagsType}`].forEach(tagOption => {
                     if (typeof tagOption === "object") {
                         tags.push(tagOption.ingredient)
                     } else {

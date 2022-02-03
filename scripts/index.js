@@ -1,8 +1,20 @@
-const recipesDisplayed = recipes;
+let recipesDisplayed = recipes;
 
 
 function init() {
+    const main = document.querySelector("main");
+    
+    const sectionRecipes = document.createElement("div");
+    sectionRecipes.classList.add("section-recipes");
+
+    const cardContainer = document.createElement("div");
+    cardContainer.classList.add("card-container");
+
     getTagMenus(recipesDisplayed);
+
+    sectionRecipes.append(cardContainer);
+    main.append(sectionRecipes);
+
     displayRecipes(recipesDisplayed);
 
     const mainSearchBar = document.querySelector("#main-search-bar");
@@ -15,16 +27,7 @@ init();
 
 // Functions
 function displayRecipes(recipes) {
-    const main = document.querySelector("main");
-
-    const sectionRecipes = document.createElement("div");
-    sectionRecipes.classList.add("section-recipes");
-
-    const cardContainer = document.createElement("div");
-    cardContainer.classList.add("card-container");
-
-    sectionRecipes.append(cardContainer);
-    main.append(sectionRecipes);
+    const cardContainer = document.querySelector(".card-container");
 
     recipes.forEach(recipe => {
         const recipeModel = new RecipeFactory(recipe);
@@ -65,18 +68,62 @@ function recipesFilter(event) {
     const inputValue = event.target.value.toLowerCase();
     const cardContainer = document.querySelector(".card-container");
     const tagContainer = document.querySelector(".tag-container");
-
+    const menuIngredientsOptions = document.querySelector("#menu-ingredients").querySelector(".filter-menu-options");
+    const menuAppliancesOptions = document.querySelector("#menu-appliance").querySelector(".filter-menu-options");
+    const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
+    
     const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.appliance.toLowerCase().includes(inputValue)
     || recipe.ustensils[0].toLowerCase().includes(inputValue)
     || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // get recipe when there are ingredients corresponding to input
     )
-
+    
     cardContainer.textContent = "";
     tagContainer.textContent = "";
+    menuIngredientsOptions.textContent = "";
+    menuAppliancesOptions.textContent = "";
+    menuUstensilsOptions.textContent = "";
+    
+    if (inputValue.length >= 3) {
+        displayRecipes(recipesCorrespondingToInput);
+        getTagsOptions(recipesCorrespondingToInput, "appliance")
+        getTagsOptions(recipesCorrespondingToInput, "ingredients")
+        getTagsOptions(recipesCorrespondingToInput, "ustensils")
+    } else {
+        displayRecipes(recipes);
+        getTagsOptions(recipesCorrespondingToInput, "appliance")
+        getTagsOptions(recipesCorrespondingToInput, "ingredients")
+        getTagsOptions(recipesCorrespondingToInput, "ustensils")
+    }
+}
 
-    recipesCorrespondingToInput.forEach(recipe => {
-        const recipeModel = new RecipeFactory(recipe);
-        const recipeCard = recipeModel.createCard();
-        cardContainer.appendChild(recipeCard);
+
+function getTagsOptions(recipes, menu) {
+    const menuSelected = document.querySelector(`#menu-${menu}`);
+    const OptionsContainer = menuSelected.querySelector(".filter-menu-options");
+    const tags = [];
+    const tagsType = menu;
+
+    recipes.forEach(recipe => {
+        if (!Array.isArray(recipe[tagsType])) {
+            tags.push(recipe[tagsType]);
+        }
+        else {
+            recipe[tagsType].forEach(tagOption => {
+                if (typeof tagOption === "object") {
+                    tags.push(tagOption.ingredient)
+                } else {
+                    tags.push(tagOption)
+                }
+            });
+        }
     });
+
+    const tagsWithoutDuplicate = Array.from(new Set(tags)); // Set allows to remove duplicate from array
+
+    tagsWithoutDuplicate.forEach(tagOption => {
+        const tagModel = new TagFactory(tagOption);
+        const tagDOM = tagModel.getElementDOM();
+        OptionsContainer.append(tagDOM);
+        }
+    )
 }
