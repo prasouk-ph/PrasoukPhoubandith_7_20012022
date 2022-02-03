@@ -71,6 +71,7 @@ function filterRecipes(event) {
     const menuIngredientsOptions = document.querySelector("#menu-ingredients").querySelector(".filter-menu-options");
     const menuAppliancesOptions = document.querySelector("#menu-appliance").querySelector(".filter-menu-options");
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
+    const menusInputs = document.querySelector(".filter-container").querySelectorAll(".tag-search-bar");
     
     // const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.appliance.toLowerCase().includes(inputValue)
     // || recipe.ustensils[0].toLowerCase().includes(inputValue)
@@ -107,9 +108,11 @@ function filterRecipes(event) {
         getTagsOptions(recipes, "appliance")
         getTagsOptions(recipes, "ingredients")
         getTagsOptions(recipes, "ustensils")
-        
+
         recipesDisplayed = recipes;
     }
+
+    menusInputs.forEach(input => input.value = "");
 }
 
 

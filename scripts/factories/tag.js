@@ -108,7 +108,7 @@ class TagMenu {
             const tagsFromRecipesDisplay = [];
             
         
-            recipes.forEach(recipe => {
+            recipesDisplayed.forEach(recipe => {
                 if (!Array.isArray(recipe[tagsType])) { // when tag type is appliance
                     tagsFromRecipesDisplay.push(recipe[tagsType]);
                 } else {
