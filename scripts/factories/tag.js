@@ -48,8 +48,8 @@ class TagMenu {
 
         const tagsWithoutDuplicate = Array.from(new Set(tags)); // Set allows to remove duplicate from array
 
-        const OptionsContainer = document.createElement("ul");
-        OptionsContainer.classList.add("filter-menu-options");
+        const optionsContainer = document.createElement("ul");
+        optionsContainer.classList.add("filter-menu-options");
         
         const tagContainer = document.createElement("div");
         tagContainer.classList.add("tag-container");
@@ -57,14 +57,14 @@ class TagMenu {
         tagsWithoutDuplicate.forEach(tagOption => {
             const tagModel = new TagFactory(tagOption);
             const tagDOM = tagModel.getElementDOM();
-            OptionsContainer.append(tagDOM);
+            optionsContainer.append(tagDOM);
             }
         )
 
 
         // append elements
         menu.append(menuTitle, menuContent);
-        menuContent.append(searchBar, OptionsContainer);
+        menuContent.append(searchBar, optionsContainer);
 
         menu.addEventListener("click", openDropdown);
         searchBar.addEventListener("input", filterTags);
@@ -72,7 +72,7 @@ class TagMenu {
 
         // functions
         function openDropdown() {
-            const menuOptionsQty = OptionsContainer.querySelectorAll(":not(.hide)");
+            const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
             
             menuContent.style.display = "block";
 

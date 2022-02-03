@@ -18,7 +18,7 @@ function init() {
     displayRecipes(recipesDisplayed);
 
     const mainSearchBar = document.querySelector("#main-search-bar");
-    mainSearchBar.addEventListener("input", recipesFilter)
+    mainSearchBar.addEventListener("input", filterRecipes)
 }
 
 
@@ -64,7 +64,7 @@ function getTagMenus(recipes) {
 }
 
 
-function recipesFilter(event) {
+function filterRecipes(event) {
     const inputValue = event.target.value.toLowerCase();
     const cardContainer = document.querySelector(".card-container");
     const tagContainer = document.querySelector(".tag-container");
@@ -72,9 +72,14 @@ function recipesFilter(event) {
     const menuAppliancesOptions = document.querySelector("#menu-appliance").querySelector(".filter-menu-options");
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
     
-    const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.appliance.toLowerCase().includes(inputValue)
-    || recipe.ustensils[0].toLowerCase().includes(inputValue)
-    || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // get recipe when there are ingredients corresponding to input
+    // const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.appliance.toLowerCase().includes(inputValue)
+    // || recipe.ustensils[0].toLowerCase().includes(inputValue)
+    // || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are keys values corresponding to input
+    // )
+
+    const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
+    || recipe.description.toLowerCase().includes(inputValue)
+    || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are keys values corresponding to input
     )
     
     cardContainer.textContent = "";
@@ -88,20 +93,21 @@ function recipesFilter(event) {
         getTagsOptions(recipesCorrespondingToInput, "appliance")
         getTagsOptions(recipesCorrespondingToInput, "ingredients")
         getTagsOptions(recipesCorrespondingToInput, "ustensils")
+        recipesDisplayed = recipesCorrespondingToInput;
     } else {
         displayRecipes(recipes);
-        getTagsOptions(recipesCorrespondingToInput, "appliance")
-        getTagsOptions(recipesCorrespondingToInput, "ingredients")
-        getTagsOptions(recipesCorrespondingToInput, "ustensils")
+        getTagsOptions(recipes, "appliance")
+        getTagsOptions(recipes, "ingredients")
+        getTagsOptions(recipes, "ustensils")
+        recipesDisplayed = recipes;
     }
 }
 
 
-function getTagsOptions(recipes, menu) {
-    const menuSelected = document.querySelector(`#menu-${menu}`);
-    const OptionsContainer = menuSelected.querySelector(".filter-menu-options");
+function getTagsOptions(recipes, tagsType) {
+    const menuSelected = document.querySelector(`#menu-${tagsType}`);
+    const optionsContainer = menuSelected.querySelector(".filter-menu-options");
     const tags = [];
-    const tagsType = menu;
 
     recipes.forEach(recipe => {
         if (!Array.isArray(recipe[tagsType])) {
@@ -123,7 +129,7 @@ function getTagsOptions(recipes, menu) {
     tagsWithoutDuplicate.forEach(tagOption => {
         const tagModel = new TagFactory(tagOption);
         const tagDOM = tagModel.getElementDOM();
-        OptionsContainer.append(tagDOM);
+        optionsContainer.append(tagDOM);
         }
     )
 }
