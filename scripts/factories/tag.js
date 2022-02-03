@@ -193,37 +193,49 @@ class TagFactory {
             const menuSelected = optionsContainer.parentNode.parentNode;
             const menuDropdownSelected = optionsContainer.parentNode;
             const tagOption = event.target;
+            const existingTagsButtons = [];
     
-            const tagButton = document.createElement("button");
-            tagButton.classList.add("button-tag");
-    
-            if (optionsContainer.parentNode.className.includes("green")) {
-                tagButton.classList.add("button-tag-green");
-            } else if (optionsContainer.parentNode.className.includes("red")) {
-                tagButton.classList.add("button-tag-red");
-            } else if (optionsContainer.parentNode.className.includes("blue")) {
-                tagButton.classList.add("button-tag-blue");
-            }
-    
-            tagButton.textContent = tagOption.textContent;
-            tagButton.addEventListener("click", removeTag);
+            document.querySelectorAll(".button-tag").forEach(tagButton => {
+                existingTagsButtons.push(tagButton.textContent);
+            });
 
-            tagContainer.append(tagButton);
-            
-            tagOption.classList.add("hide");
+            if (existingTagsButtons.includes(tagOption.textContent)) {
+                console.log("Can't add existed tag")
+            } else {
+                const tagButton = document.createElement("button");
+                tagButton.classList.add("button-tag");
+        
+                if (optionsContainer.parentNode.className.includes("green")) {
+                    tagButton.classList.add("button-tag-green");
+                } else if (optionsContainer.parentNode.className.includes("red")) {
+                    tagButton.classList.add("button-tag-red");
+                } else if (optionsContainer.parentNode.className.includes("blue")) {
+                    tagButton.classList.add("button-tag-blue");
+                }
+        
+                tagButton.textContent = tagOption.textContent;
+                tagButton.addEventListener("click", removeTag);
 
-            // to update the options container size
-            const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
-            if (optionsVisible.length <= 1) {
-                menuDropdownSelected.style.width = "180px";
-                menuSelected.style.marginRight = "50px";
-            } else if (optionsVisible.length == 2) {
-                menuDropdownSelected.style.width = "450px";
-                menuSelected.style.marginRight = "320px";
-            } else if (optionsVisible.length >= 3) {
-                menuDropdownSelected.style.width = "680px";
-                menuSelected.style.marginRight = "550px";
+                tagContainer.append(tagButton);
+                
+                // tagOption.classList.add("hide");
+
+                // to update the options container size
+                const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
+                if (optionsVisible.length <= 1) {
+                    menuDropdownSelected.style.width = "180px";
+                    menuSelected.style.marginRight = "50px";
+                } else if (optionsVisible.length == 2) {
+                    menuDropdownSelected.style.width = "450px";
+                    menuSelected.style.marginRight = "320px";
+                } else if (optionsVisible.length >= 3) {
+                    menuDropdownSelected.style.width = "680px";
+                    menuSelected.style.marginRight = "550px";
+                }
             }
+
+
+            // console.log(tagButton.textContent)
     
 
             function removeTag() {
@@ -231,7 +243,7 @@ class TagFactory {
                 
                 tagContainer.removeChild(tagButton);
                 
-                tagOption.classList.remove("hide");
+                // tagOption.classList.remove("hide");
             }
         }
     }

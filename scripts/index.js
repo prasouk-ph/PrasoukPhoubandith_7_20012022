@@ -73,14 +73,10 @@ function filterRecipes(event) {
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
     const menusInputs = document.querySelector(".filter-container").querySelectorAll(".tag-search-bar");
     
-    // const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.appliance.toLowerCase().includes(inputValue)
-    // || recipe.ustensils[0].toLowerCase().includes(inputValue)
-    // || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are keys values corresponding to input
-    // )
 
     const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
-    || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are keys values corresponding to input
+    || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are ingredient key values corresponding to input
     )
     
     cardContainer.textContent = "";
