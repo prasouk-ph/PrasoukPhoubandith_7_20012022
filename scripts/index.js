@@ -4,6 +4,9 @@ const recipesDisplayed = recipes;
 function init() {
     getTagMenus(recipesDisplayed);
     displayRecipes(recipesDisplayed);
+
+    const mainSearchBar = document.querySelector("#main-search-bar");
+    mainSearchBar.addEventListener("input", recipesFilter)
 }
 
 
@@ -58,3 +61,22 @@ function getTagMenus(recipes) {
 }
 
 
+function recipesFilter(event) {
+    const inputValue = event.target.value.toLowerCase();
+    const cardContainer = document.querySelector(".card-container");
+    const tagContainer = document.querySelector(".tag-container");
+
+    const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.appliance.toLowerCase().includes(inputValue)
+    || recipe.ustensils[0].toLowerCase().includes(inputValue)
+    || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // get recipe when there are ingredients corresponding to input
+    )
+
+    cardContainer.textContent = "";
+    tagContainer.textContent = "";
+
+    recipesCorrespondingToInput.forEach(recipe => {
+        const recipeModel = new RecipeFactory(recipe);
+        const recipeCard = recipeModel.createCard();
+        cardContainer.appendChild(recipeCard);
+    });
+}
