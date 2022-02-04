@@ -133,7 +133,8 @@ class TagMenu {
             });
         
             optionsContainer.textContent = "";
-        
+
+            // to fit tag hiding : if tag already exist in a button tag in tag container, don't create tag model
             if (tagsCorrespondingToInput.length > 0) {
                 tagsCorrespondingToInput.forEach(tag => {
                     const tagModel = new TagFactory(tag);
@@ -214,7 +215,7 @@ class TagFactory {
                     tagButton.classList.add("button-tag-blue");
                 }
 
-                tagButton.setAttribute("type", tagsType);
+                tagButton.setAttribute("tagtype", tagsType);
                 tagButton.textContent = tagOption.textContent;
                 tagButton.addEventListener("click", removeTag);
 
