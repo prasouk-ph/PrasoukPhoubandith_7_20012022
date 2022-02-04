@@ -1,4 +1,4 @@
-let recipesDisplayed = recipes;
+let currentRecipesDisplayed = recipes;
 
 
 function init() {
@@ -10,12 +10,12 @@ function init() {
     const cardContainer = document.createElement("div");
     cardContainer.classList.add("card-container");
 
-    getTagMenus(recipesDisplayed);
+    getTagMenus(currentRecipesDisplayed);
 
     sectionRecipes.append(cardContainer);
     main.append(sectionRecipes);
 
-    displayRecipes(recipesDisplayed);
+    displayRecipes(currentRecipesDisplayed);
 
     const mainSearchBar = document.querySelector("#main-search-bar");
     mainSearchBar.addEventListener("input", filterRecipes)
@@ -74,9 +74,9 @@ function filterRecipes(event) {
     const menusInputs = document.querySelector(".filter-container").querySelectorAll(".tag-search-bar");
     
 
-    const recipesCorrespondingToInput = recipesDisplayed.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
+    const recipesCorrespondingToInput = currentRecipesDisplayed.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
-    || recipe.ingredients.some(item => item.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are ingredient key values corresponding to input
+    || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are ingredient key values corresponding to input
     )
     
     cardContainer.textContent = "";
@@ -92,7 +92,7 @@ function filterRecipes(event) {
             getTagsOptions(recipesCorrespondingToInput, "ingredients")
             getTagsOptions(recipesCorrespondingToInput, "ustensils")
 
-            recipesDisplayed = recipesCorrespondingToInput;
+            currentRecipesDisplayed = recipesCorrespondingToInput;
 
             if (recipesCorrespondingToInput.length <= 0) {
                 const message = document.createElement("p");
@@ -105,7 +105,7 @@ function filterRecipes(event) {
         getTagsOptions(recipes, "ingredients")
         getTagsOptions(recipes, "ustensils")
 
-        recipesDisplayed = recipes;
+        currentRecipesDisplayed = recipes;
     }
 
     menusInputs.forEach(input => input.value = "");
@@ -116,6 +116,8 @@ function getTagsOptions(recipes, tagsType) {
     const menuSelected = document.querySelector(`#menu-${tagsType}`);
     const optionsContainer = menuSelected.querySelector(".filter-menu-options");
     const tags = [];
+
+    optionsContainer.textContent = "";
 
     recipes.forEach(recipe => {
         if (!Array.isArray(recipe[tagsType])) {
@@ -141,3 +143,48 @@ function getTagsOptions(recipes, tagsType) {
         }
     )
 }
+
+
+const tagContainer = document.querySelector(".tag-container");
+
+
+let tagContainerListener = new MutationObserver(mutationsReaction);
+tagContainerListener.observe(tagContainer, {childList: true} );
+function mutationsReaction(mutationsList) {
+    for(let mutation of mutationsList) {
+        if (mutation.addedNodes.length > 0) {
+            const tagButton = mutation.addedNodes[0];
+            const tagButtonName = tagButton.textContent;
+            const tagButtonType = tagButton.getAttribute("type");
+            const cardContainer = document.querySelector(".card-container");
+            
+            console.log('Tag added');
+
+            cardContainer.textContent = "";
+
+            const recipesCorrespondingToTags = currentRecipesDisplayed.filter(recipe => recipe[tagButtonType].includes(tagButtonName)
+                || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tagButtonName))
+            );
+            
+            
+            displayRecipes(recipesCorrespondingToTags);
+            currentRecipesDisplayed = recipesCorrespondingToTags;
+            getTagsOptions(currentRecipesDisplayed, "appliance");
+            getTagsOptions(currentRecipesDisplayed, "ustensils");
+            getTagsOptions(currentRecipesDisplayed, "ingredients");
+        }
+        else if (mutation.removedNodes.length > 0) {
+            const tagButton = mutation.removedNodes[0];
+            const tagButtonName = tagButton.textContent;
+            const tagButtonType = tagButton.getAttribute("type");
+            const cardContainer = document.querySelector(".card-container");
+    
+            console.log('Tag removed');
+
+            cardContainer.textContent = "";
+            
+            displayRecipes(recipes);
+            currentRecipesDisplayed = recipes;
+        }
+    }
+};

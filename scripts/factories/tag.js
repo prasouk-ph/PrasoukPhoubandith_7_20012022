@@ -108,7 +108,7 @@ class TagMenu {
             const tagsFromRecipesDisplay = [];
             
         
-            recipesDisplayed.forEach(recipe => {
+            currentRecipesDisplayed.forEach(recipe => {
                 if (!Array.isArray(recipe[tagsType])) { // when tag type is appliance
                     tagsFromRecipesDisplay.push(recipe[tagsType]);
                 } else {
@@ -193,8 +193,9 @@ class TagFactory {
             const menuSelected = optionsContainer.parentNode.parentNode;
             const menuDropdownSelected = optionsContainer.parentNode;
             const tagOption = event.target;
+            const tagsType = getTagsType();
             const existingTagsButtons = [];
-    
+            
             document.querySelectorAll(".button-tag").forEach(tagButton => {
                 existingTagsButtons.push(tagButton.textContent);
             });
@@ -212,7 +213,8 @@ class TagFactory {
                 } else if (optionsContainer.parentNode.className.includes("blue")) {
                     tagButton.classList.add("button-tag-blue");
                 }
-        
+
+                tagButton.setAttribute("type", tagsType);
                 tagButton.textContent = tagOption.textContent;
                 tagButton.addEventListener("click", removeTag);
 
@@ -234,16 +236,24 @@ class TagFactory {
                 }
             }
 
-
-            // console.log(tagButton.textContent)
-    
-
-            function removeTag() {
+            
+            function removeTag(event) {
                 const tagContainer = document.querySelector(".tag-container");
                 
-                tagContainer.removeChild(tagButton);
+                tagContainer.removeChild(event.target);
                 
                 // tagOption.classList.remove("hide");
+            }
+
+
+            function getTagsType() {
+                if (menuSelected.id == "menu-appliance") {
+                    return "appliance";
+                } else if (menuSelected.id == "menu-ustensils") {
+                    return "ustensils";
+                } else if (menuSelected.id == "menu-ingredients") {
+                    return "ingredients";
+                }
             }
         }
     }
