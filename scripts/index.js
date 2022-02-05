@@ -1,4 +1,4 @@
-let currentRecipesDisplayed = recipes;
+let currentRecipesDisplayed;
 
 init();
 
@@ -13,12 +13,12 @@ function init() {
     const cardContainer = document.createElement("div");
     cardContainer.classList.add("card-container");
 
-    getTagMenus(currentRecipesDisplayed);
+    getTagMenus(recipes);
 
     sectionRecipes.append(cardContainer);
     main.append(sectionRecipes);
 
-    displayRecipes(currentRecipesDisplayed);
+    displayRecipes(recipes);
 
     const mainSearchBar = document.querySelector("#main-search-bar");
     mainSearchBar.addEventListener("input", filterRecipes)
@@ -39,6 +39,8 @@ function displayRecipes(recipes) {
         const recipeCard = recipeModel.createCard();
         cardContainer.appendChild(recipeCard);
     });
+
+    currentRecipesDisplayed = recipes;
 }
 
 
