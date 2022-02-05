@@ -1,6 +1,9 @@
 let currentRecipesDisplayed = recipes;
 
+init();
 
+
+// Functions
 function init() {
     const main = document.querySelector("main");
     
@@ -19,13 +22,14 @@ function init() {
 
     const mainSearchBar = document.querySelector("#main-search-bar");
     mainSearchBar.addEventListener("input", filterRecipes)
+
+    const tagContainer = document.querySelector(".tag-container");
+
+    let tagContainerListener = new MutationObserver(mutationsReaction);
+    tagContainerListener.observe(tagContainer, { childList: true } );
 }
 
 
-init();
-
-
-// Functions
 function displayRecipes(recipes) {
     const cardContainer = document.querySelector(".card-container");
     cardContainer.textContent = "";
@@ -74,7 +78,7 @@ function filterRecipes(event) {
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
     const menusInputs = document.querySelector(".filter-container").querySelectorAll(".tag-search-bar");
     
-    const recipesCorrespondingToInput = currentRecipesDisplayed.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
+    const recipesCorrespondingToInput = recipes.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
     || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are ingredient key values corresponding to input
     )
@@ -87,7 +91,7 @@ function filterRecipes(event) {
     menuUstensilsOptions.textContent = "";
     menusInputs.forEach(input => input.value = "");
     
-    
+
     // display recipes and get tag options according to input value
     if (inputValue.length >= 3) {
         displayRecipes(recipesCorrespondingToInput);
@@ -97,7 +101,7 @@ function filterRecipes(event) {
 
         currentRecipesDisplayed = recipesCorrespondingToInput;
 
-        if (recipesCorrespondingToInput.length <= 0) {
+        if (currentRecipesDisplayed.length <= 0) {
             const message = document.createElement("p");
             message.textContent = "Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc.";
             cardContainer.append(message)
@@ -147,13 +151,6 @@ function getTagsOptions(recipes, tagsType) {
 }
 
 
-const tagContainer = document.querySelector(".tag-container");
-
-
-let tagContainerListener = new MutationObserver(mutationsReaction);
-tagContainerListener.observe(tagContainer, { childList: true } );
-
-
 function mutationsReaction(mutationsList) {
     for(let mutation of mutationsList) {
         if (mutation.addedNodes.length > 0) {
@@ -166,8 +163,7 @@ function mutationsReaction(mutationsList) {
             );
             
             RecipesToDisplayed = recipesCorrespondingToTags;
-        }
-        else if (mutation.removedNodes.length > 0) {
+        } else if (mutation.removedNodes.length > 0) {
             const existingTagsButtons = document.querySelectorAll(".button-tag");
             const appliancesTagsSelected = [];
             const ustensilsTagsSelected = [];
