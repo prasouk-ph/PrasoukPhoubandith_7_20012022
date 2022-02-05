@@ -107,6 +107,10 @@ class TagMenu {
                     const tagDOM = tagModel.getElementDOM();
                     optionsContainer.append(tagDOM);
                 })
+            } else {
+                const noResultMessage = document.createElement("p");
+                noResultMessage.textContent = "Aucun résultat";
+                optionsContainer.append(noResultMessage);
             }
         
             // to update the options container size
