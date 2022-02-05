@@ -323,6 +323,13 @@ main {
     margin: 0;
 }
 
+.message {
+    width: max-content;
+}
+
+.hide {
+    display: none;
+}
 
 @keyframes dropdownopen {
     from {
@@ -333,6 +340,3 @@ main {
     }
 }
 
-.hide {
-    display: none;
-}

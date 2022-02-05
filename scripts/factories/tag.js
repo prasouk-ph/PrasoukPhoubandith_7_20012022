@@ -76,29 +76,29 @@ class TagMenu {
             const optionsContainer = event.target.parentNode.querySelector(".filter-menu-options");
             const menuSelected = optionsContainer.parentNode.parentNode;
             const tagsType = getTagsType();
-            const tagsFromRecipesDisplay = [];
+            const tagsFromRecipesDisplayed = [];
             
             // get tags according to type and recipes displayed
             currentRecipesDisplayed.forEach(recipe => {
                 if (!Array.isArray(recipe[tagsType])) { // when tag type is appliance
-                    tagsFromRecipesDisplay.push(recipe[tagsType]);
+                    tagsFromRecipesDisplayed.push(recipe[tagsType]);
                 } else {
                     recipe[tagsType].forEach(tagItem => {
                         if (typeof tagItem === "object") { // when tag type is ingredients
-                            tagsFromRecipesDisplay.push(tagItem.ingredient);
+                            tagsFromRecipesDisplayed.push(tagItem.ingredient);
                         } else {
-                            tagsFromRecipesDisplay.push(tagItem); // when tag type is ustensils
+                            tagsFromRecipesDisplayed.push(tagItem); // when tag type is ustensils
                         }
                     });
                 }
             });
         
-            const tagsFromRecipesDisplayWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplay));
+            const tagsFromRecipesDisplayedWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplayed));
             
             const tagsCorrespondingToInput = [];
         
             // get tags according to input value
-            tagsFromRecipesDisplayWithoutDuplicate.forEach(tag => {
+            tagsFromRecipesDisplayedWithoutDuplicate.forEach(tag => {
                 if (tag.toLowerCase().includes(inputValue)) {
                     tagsCorrespondingToInput.push(tag)
                 }
@@ -106,7 +106,9 @@ class TagMenu {
         
             optionsContainer.textContent = "";
 
-            // to fit tag hiding : if tag already exist in a button tag in tag container, don't create tag model
+            // to fit tag hiding, add condition : if tag already exist in a button tag in tag container, don't create tag model
+
+            // generate tags options items
             if (tagsCorrespondingToInput.length > 0) {
                 tagsCorrespondingToInput.forEach(tag => {
                     const tagModel = new TagFactory(tag);

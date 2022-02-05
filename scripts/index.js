@@ -105,6 +105,7 @@ function filterRecipes(event) {
         
         if (currentRecipesDisplayed.length <= 0) {
             const message = document.createElement("p");
+            message.classList.add("message")
             message.textContent = "Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc.";
             cardContainer.append(message)
         }
@@ -117,29 +118,29 @@ function filterRecipes(event) {
 function getTagsOptions(recipes, tagsType) {
     const menuSelected = document.querySelector(`#menu-${tagsType}`);
     const optionsContainer = menuSelected.querySelector(".filter-menu-options");
-    const tags = [];
+    const tagsFromRecipesDisplayed = [];
 
     optionsContainer.textContent = "";
 
     recipes.forEach(recipe => {
         if (!Array.isArray(recipe[tagsType])) {
-            tags.push(recipe[tagsType]);
+            tagsFromRecipesDisplayed.push(recipe[tagsType]);
         }
         else {
             recipe[tagsType].forEach(tagOption => {
                 if (typeof tagOption === "object") {
-                    tags.push(tagOption.ingredient)
+                    tagsFromRecipesDisplayed.push(tagOption.ingredient)
                 } else {
-                    tags.push(tagOption)
+                    tagsFromRecipesDisplayed.push(tagOption)
                 }
             });
         }
     });
 
-    const tagsWithoutDuplicate = Array.from(new Set(tags)); // Set allows to remove duplicate from array
+    const tagsFromRecipesDisplayedWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplayed)); // Set allows to remove duplicate from array
 
     // generate tags options items
-    tagsWithoutDuplicate.forEach(tagOption => {
+    tagsFromRecipesDisplayedWithoutDuplicate.forEach(tagOption => {
         const tagModel = new TagFactory(tagOption);
         const tagDOM = tagModel.getElementDOM();
         optionsContainer.append(tagDOM);
@@ -159,7 +160,7 @@ function mutationsReaction(mutationsList) {
                 || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tagButtonName))
             );
             
-            RecipesToDisplayed = recipesCorrespondingToTags;
+            displayRecipes(recipesCorrespondingToTags);
         } else if (mutation.removedNodes.length > 0) {
             const existingTagsButtons = document.querySelectorAll(".button-tag");
             const appliancesTagsSelected = [];
@@ -190,9 +191,7 @@ function mutationsReaction(mutationsList) {
                 && ingredientsTagsSelected.every(tags => recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tags)))
             )
 
-            RecipesToDisplayed = recipesCorrespondingToInputAndTags;
-        }
-
-        displayRecipes(RecipesToDisplayed);
+            displayRecipes(recipesCorrespondingToInputAndTags);
+        }        
     }
 };
