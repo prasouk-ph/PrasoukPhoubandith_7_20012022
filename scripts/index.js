@@ -202,7 +202,7 @@ function mutationsReaction(mutationsList) {
         
         optionsItems.forEach(item => {
             if (existingTagButtons.includes(item.textContent)) {
-                item.classList.add("selected");
+                item.classList.add("active");
             }
         })
     }

@@ -330,7 +330,7 @@ main {
     width: max-content;
 }
 
-.selected::after {
+.active::after {
     font-family: "Font Awesome 5 Free";
     content: "\f00c";
     font-weight: 900;
