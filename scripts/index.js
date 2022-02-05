@@ -32,7 +32,11 @@ function init() {
 
 function displayRecipes(recipes) {
     const cardContainer = document.querySelector(".card-container");
+    const menusInputs = document.querySelector(".filter-container").querySelectorAll(".tag-search-bar");
+    
     cardContainer.textContent = "";
+
+    menusInputs.forEach(input => input.value = "");
 
     recipes.forEach(recipe => {
         const recipeModel = new RecipeFactory(recipe);
@@ -78,8 +82,8 @@ function filterRecipes(event) {
     const menuIngredientsOptions = document.querySelector("#menu-ingredients").querySelector(".filter-menu-options");
     const menuAppliancesOptions = document.querySelector("#menu-appliance").querySelector(".filter-menu-options");
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
-    const menusInputs = document.querySelector(".filter-container").querySelectorAll(".tag-search-bar");
     
+
     const recipesCorrespondingToInput = recipes.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
     || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are ingredient key values corresponding to input
@@ -91,9 +95,7 @@ function filterRecipes(event) {
     menuIngredientsOptions.textContent = "";
     menuAppliancesOptions.textContent = "";
     menuUstensilsOptions.textContent = "";
-    menusInputs.forEach(input => input.value = "");
     
-
     // display recipes and get tag options according to input value
     if (inputValue.length >= 3) {
         displayRecipes(recipesCorrespondingToInput);
@@ -124,6 +126,7 @@ function getTagsOptions(recipes, tagsType) {
     const menuSelected = document.querySelector(`#menu-${tagsType}`);
     const optionsContainer = menuSelected.querySelector(".filter-menu-options");
     const tags = [];
+
 
     optionsContainer.textContent = "";
 
