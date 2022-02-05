@@ -11,46 +11,6 @@ class RecipeFactory {
     }
 
 
-    getId() {
-        return this._id;
-    }
-
-
-    getName() {
-        return this._name;
-    }
-
-
-    getServings() {
-        return this._servings;
-    }
-
-
-    getIngredients() {
-        return this._ingredients;
-    }
-
-
-    getTime() {
-        return this._time;
-    }
-
-
-    getDescription() {
-        return this._description;
-    }
-
-
-    getAppliance() {
-        return this._appliance;
-    }
-
-
-    getUstensils() {
-        return this._ustensils;
-    }
-
-
     createCard() {
         const card = document.createElement("div");
         card.classList.add("card");
@@ -79,7 +39,7 @@ class RecipeFactory {
         const recipeIngredients = this._ingredients;
         recipeIngredients.forEach(ingredient => {
             const ingredientModel = new IngredientFactory(ingredient);
-            const ingredientDOM = ingredientModel.createIngredient()
+            const ingredientDOM = ingredientModel.createIngredient();
             recipeIngredientsContainer.append(ingredientDOM);
         });
         

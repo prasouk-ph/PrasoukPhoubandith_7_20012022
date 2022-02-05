@@ -21,7 +21,7 @@ function init() {
     displayRecipes(recipes);
 
     const mainSearchBar = document.querySelector("#main-search-bar");
-    mainSearchBar.addEventListener("input", filterRecipes)
+    mainSearchBar.addEventListener("input", filterRecipes);
 
     const tagContainer = document.querySelector(".tag-container");
 
@@ -90,7 +90,7 @@ function filterRecipes(event) {
     const recipesCorrespondingToInput = recipes.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
     || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipes when there are values from key ingredient corresponding to input
-    )
+    );
     
     // clear every container
     cardContainer.textContent = "";
@@ -105,9 +105,9 @@ function filterRecipes(event) {
         
         if (currentRecipesDisplayed.length <= 0) {
             const message = document.createElement("p");
-            message.classList.add("message")
+            message.classList.add("message");
             message.textContent = "Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-            cardContainer.append(message)
+            cardContainer.append(message);
         }
     } else {
         displayRecipes(recipes);
@@ -129,9 +129,9 @@ function getTagsOptions(recipes, tagsType) {
         else {
             recipe[tagsType].forEach(tagOption => {
                 if (typeof tagOption === "object") {
-                    tagsFromRecipesDisplayed.push(tagOption.ingredient)
+                    tagsFromRecipesDisplayed.push(tagOption.ingredient);
                 } else {
-                    tagsFromRecipesDisplayed.push(tagOption)
+                    tagsFromRecipesDisplayed.push(tagOption);
                 }
             });
         }
@@ -183,13 +183,13 @@ function mutationsReaction(mutationsList) {
                 recipe.name.toLowerCase().includes(mainSearchInputValue)
                 || recipe.description.toLowerCase().includes(mainSearchInputValue)
                 || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(mainSearchInputValue))
-            )
+            );
 
             const recipesCorrespondingToInputAndTags = recipesCorrespondingToInput.filter(recipe => 
                 appliancesTagsSelected.every(tags => recipe.appliance.includes(tags)) // get recipe including EVERY tags from appliancesTagsSelected array
                 && ustensilsTagsSelected.every(tags => recipe.ustensils.includes(tags))
                 && ingredientsTagsSelected.every(tags => recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tags)))
-            )
+            );
 
             displayRecipes(recipesCorrespondingToInputAndTags);
         }

@@ -100,7 +100,7 @@ class TagMenu {
             // get tags according to input value
             tagsFromRecipesDisplayedWithoutDuplicate.forEach(tag => {
                 if (tag.toLowerCase().includes(inputValue)) {
-                    tagsCorrespondingToInput.push(tag)
+                    tagsCorrespondingToInput.push(tag);
                 }
             });
         
