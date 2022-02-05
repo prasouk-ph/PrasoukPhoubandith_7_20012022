@@ -74,19 +74,21 @@ function filterRecipes(event) {
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
     const menusInputs = document.querySelector(".filter-container").querySelectorAll(".tag-search-bar");
     
-
     const recipesCorrespondingToInput = currentRecipesDisplayed.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
     || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are ingredient key values corresponding to input
     )
     
+    // clear every container
     cardContainer.textContent = "";
     tagContainer.textContent = "";
     menuIngredientsOptions.textContent = "";
     menuAppliancesOptions.textContent = "";
     menuUstensilsOptions.textContent = "";
+    menusInputs.forEach(input => input.value = "");
     
     
+    // display recipes and get tag options according to input value
     if (inputValue.length >= 3) {
         displayRecipes(recipesCorrespondingToInput);
         getTagsOptions(recipesCorrespondingToInput, "appliance")
@@ -108,9 +110,7 @@ function filterRecipes(event) {
         getTagsOptions(recipes, "ustensils")
 
         currentRecipesDisplayed = recipes;
-    }
-
-    menusInputs.forEach(input => input.value = "");
+    }    
 }
 
 
@@ -160,8 +160,6 @@ function mutationsReaction(mutationsList) {
             const tagButtonAdded = mutation.addedNodes[0];
             const tagButtonName = tagButtonAdded.textContent;
             const tagButtonType = tagButtonAdded.getAttribute("tagtype");
-            
-            console.log('Tag added');
 
             const recipesCorrespondingToTags = currentRecipesDisplayed.filter(recipe => recipe[tagButtonType].includes(tagButtonName)
                 || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tagButtonName))
@@ -170,25 +168,14 @@ function mutationsReaction(mutationsList) {
             RecipesToDisplayed = recipesCorrespondingToTags;
         }
         else if (mutation.removedNodes.length > 0) {
-            const tagButtonAdded = mutation.removedNodes[0];
-            const tagButtonName = tagButtonAdded.textContent;
-            const tagButtonType = tagButtonAdded.getAttribute("tagtype");
-            
-
-            console.log('Tag removed');
-
-            // get all tags in tags container, filter allrecipes according to main search and every tags
-            // ex : const recipesCorrespondingToTags = recipes.filter(recipe => recipe[tagButtonType].includes(mainSearchInput && tagButtonName1 && tagButtonName2)
-            // || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(mainSearchInput && tagButtonName1 && tagButtonName2))
-
-            // const tagContainer = document.querySelector(".tag-container");
             const existingTagsButtons = document.querySelectorAll(".button-tag");
             const appliancesTagsSelected = [];
             const ustensilsTagsSelected = [];
             const ingredientsTagsSelected = [];
+            const mainSearchInputValue = document.querySelector("#main-search-bar").value.toLowerCase();
 
+            // separate tags by type
             existingTagsButtons.forEach(tagButton => {
-                // console.log(tagButton.getAttribute("tagtype"));
                 if (tagButton.getAttribute("tagtype") == "appliance") {
                     appliancesTagsSelected.push(tagButton.textContent)
                 } else if (tagButton.getAttribute("tagtype") == "ustensils") {
@@ -198,31 +185,27 @@ function mutationsReaction(mutationsList) {
                 }
             });
 
-            const recipesCorrespondingToTags = recipes.filter(recipe => 
-            appliancesTagsSelected.every(tags => recipe.appliance.includes(tags)) // get recipe including EVERY tags from appliancesTagsSelected array
-            && ustensilsTagsSelected.every(tags => recipe.ustensils.includes(tags))
-            && 
-            ingredientsTagsSelected.every(tags => recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tags)))
+            const recipesCorrespondingToInput = recipes.filter(recipe => 
+                recipe.name.toLowerCase().includes(mainSearchInputValue)
+                || recipe.description.toLowerCase().includes(mainSearchInputValue)
+                || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(mainSearchInputValue))
             )
 
-            // console.log(recipesCorrespondingToTags);
-            RecipesToDisplayed = recipesCorrespondingToTags;
+            const recipesCorrespondingToInputAndTags = recipesCorrespondingToInput.filter(recipe => 
+                appliancesTagsSelected.every(tags => recipe.appliance.includes(tags)) // get recipe including EVERY tags from appliancesTagsSelected array
+                && ustensilsTagsSelected.every(tags => recipe.ustensils.includes(tags))
+                && ingredientsTagsSelected.every(tags => recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tags)))
+            )
+
+            RecipesToDisplayed = recipesCorrespondingToInputAndTags;
         }
 
-        // console.log(RecipesToDisplayed);
         displayRecipes(RecipesToDisplayed);
+
         currentRecipesDisplayed = RecipesToDisplayed;
+
         getTagsOptions(currentRecipesDisplayed, "appliance");
         getTagsOptions(currentRecipesDisplayed, "ustensils");
         getTagsOptions(currentRecipesDisplayed, "ingredients");
-
-        // const cardContainer = document.querySelector(".card-container");
-
-        // if (currentRecipesDisplayed.length <= 0) {
-        //     const message = document.createElement("p");
-        //     message.textContent = "Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-
-        //     cardContainer.append(message);
-        // }
     }
 };

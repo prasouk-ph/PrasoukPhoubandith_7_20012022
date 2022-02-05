@@ -28,25 +28,25 @@ class TagMenu {
         searchBar.setAttribute("placeholder", `Rechercher un ${this.tagsType}`);
         
 
-        // get tag options
-        const tags = [];
+        // get tags according to type and recipes displayed
+        const tagsFromRecipesDisplay = [];
 
         this.recipes.forEach(recipe => {
             if (!Array.isArray(recipe[`${this.tagsType}`])) {
-                tags.push(recipe[`${this.tagsType}`]);
+                tagsFromRecipesDisplay.push(recipe[`${this.tagsType}`]);
             }
             else {
                 recipe[`${this.tagsType}`].forEach(tagOption => {
                     if (typeof tagOption === "object") {
-                        tags.push(tagOption.ingredient)
+                        tagsFromRecipesDisplay.push(tagOption.ingredient)
                     } else {
-                        tags.push(tagOption)
+                        tagsFromRecipesDisplay.push(tagOption)
                     }
                 });
             }
         });
 
-        const tagsWithoutDuplicate = Array.from(new Set(tags)); // Set allows to remove duplicate from array
+        const tagsWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplay)); // Set allows to remove duplicate from array
 
         const optionsContainer = document.createElement("ul");
         optionsContainer.classList.add("filter-menu-options");
@@ -54,6 +54,7 @@ class TagMenu {
         const tagContainer = document.createElement("div");
         tagContainer.classList.add("tag-container");
         
+        // generate tags options items
         tagsWithoutDuplicate.forEach(tagOption => {
             const tagModel = new TagFactory(tagOption);
             const tagDOM = tagModel.getElementDOM();
@@ -66,6 +67,7 @@ class TagMenu {
         menu.append(menuTitle, menuContent);
         menuContent.append(searchBar, optionsContainer);
 
+        // event
         menu.addEventListener("click", openDropdown);
         searchBar.addEventListener("input", filterTags);
 
@@ -76,6 +78,7 @@ class TagMenu {
             
             menuContent.style.display = "block";
 
+            // to update the options container size
             if (menuOptionsQty.length <= 1) {
                 menuContent.style.width = "180px";
                 menu.style.marginRight = "50px";
@@ -107,7 +110,8 @@ class TagMenu {
             const tagsType = getTagsType();
             const tagsFromRecipesDisplay = [];
             
-        
+
+            // get tags according to type and recipes displayed
             currentRecipesDisplayed.forEach(recipe => {
                 if (!Array.isArray(recipe[tagsType])) { // when tag type is appliance
                     tagsFromRecipesDisplay.push(recipe[tagsType]);
@@ -126,6 +130,7 @@ class TagMenu {
             
             const tagsCorrespondingToInput = [];
         
+            // get tags according to input value
             tagsFromRecipesDisplayWithoutDuplicate.forEach(tag => {
                 if (tag.toLowerCase().includes(inputValue)) {
                     tagsCorrespondingToInput.push(tag)
@@ -143,8 +148,11 @@ class TagMenu {
                 })
             }
         
+            // to update the options container size
             const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
             const menuContent = optionsContainer.parentNode;
+
+
             if (menuOptionsQty.length <= 1) {
                 menuContent.style.width = "180px";
                 menuSelected.style.marginRight = "50px";
@@ -178,6 +186,7 @@ class TagFactory {
         this.name = ingredient;
     }
 
+
     getElementDOM() {
         const li = document.createElement("li");
         li.classList.add("option-item");
@@ -197,14 +206,18 @@ class TagFactory {
             const tagsType = getTagsType();
             const existingTagsButtons = [];
             
+
+            // get button tag value
             document.querySelectorAll(".button-tag").forEach(tagButton => {
                 existingTagsButtons.push(tagButton.textContent);
             });
 
+            // create tag button according to tag type
             if (existingTagsButtons.includes(tagOption.textContent)) {
                 console.log("Can't add existed tag")
             } else {
                 const tagButton = document.createElement("button");
+
                 tagButton.classList.add("button-tag");
         
                 if (optionsContainer.parentNode.className.includes("green")) {
@@ -225,6 +238,7 @@ class TagFactory {
 
                 // to update the options container size
                 const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
+
                 if (optionsVisible.length <= 1) {
                     menuDropdownSelected.style.width = "180px";
                     menuSelected.style.marginRight = "50px";
