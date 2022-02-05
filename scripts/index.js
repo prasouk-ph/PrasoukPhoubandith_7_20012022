@@ -89,7 +89,7 @@ function filterRecipes(event) {
     
     const recipesCorrespondingToInput = recipes.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
-    || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are ingredient key values corresponding to input
+    || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipes when there are values from key ingredient corresponding to input
     )
     
     // clear every container
