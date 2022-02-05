@@ -192,6 +192,18 @@ function mutationsReaction(mutationsList) {
             )
 
             displayRecipes(recipesCorrespondingToInputAndTags);
-        }        
+        }
+
+        // mark tags options selected
+        const tagContainer = document.querySelector(".tag-container");
+        const existingTagButtons = Array.from(tagContainer.querySelectorAll(".button-tag")).map(button => button.textContent);
+
+        const optionsItems = document.querySelectorAll(".option-item");
+        
+        optionsItems.forEach(item => {
+            if (existingTagButtons.includes(item.textContent)) {
+                item.classList.add("selected");
+            }
+        })
     }
 };

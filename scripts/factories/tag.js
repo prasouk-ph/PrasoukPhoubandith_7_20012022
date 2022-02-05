@@ -200,8 +200,6 @@ class TagFactory {
                 tagButton.addEventListener("click", removeTag);
 
                 tagContainer.append(tagButton);
-                
-                // tagOption.classList.add("hide");
 
                 // to update the options container size
                 const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
@@ -223,8 +221,6 @@ class TagFactory {
                 const tagContainer = document.querySelector(".tag-container");
                 
                 tagContainer.removeChild(event.target);
-                
-                // tagOption.classList.remove("hide");
             }
 
 
