@@ -76,22 +76,14 @@ class TagMenu {
             const optionsContainer = event.target.parentNode.querySelector(".filter-menu-options");
             const menuSelected = optionsContainer.parentNode.parentNode;
             const tagsType = getTagsType();
-            const tagsFromRecipesDisplayed = [];
+            let tagsFromRecipesDisplayed = [];
             
-            // get tags according to type and recipes displayed
-            currentRecipesDisplayed.forEach(recipe => {
-                if (!Array.isArray(recipe[tagsType])) { // when tag type is appliance
-                    tagsFromRecipesDisplayed.push(recipe[tagsType]);
-                } else {
-                    recipe[tagsType].forEach(tagItem => {
-                        if (typeof tagItem === "object") { // when tag type is ingredients
-                            tagsFromRecipesDisplayed.push(tagItem.ingredient);
-                        } else {
-                            tagsFromRecipesDisplayed.push(tagItem); // when tag type is ustensils
-                        }
-                    });
-                }
-            });
+            if (tagsType == "ingredients") {
+                tagsFromRecipesDisplayed = currentRecipesDisplayed.flatMap((recipe) => recipe[tagsType].map((item) => item.ingredient));
+            } 
+            else {
+                tagsFromRecipesDisplayed = currentRecipesDisplayed.flatMap(recipe => recipe[tagsType]); // flatmap allows to merge an array containing another arrays into only one array
+            }
         
             const tagsFromRecipesDisplayedWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplayed));
             
