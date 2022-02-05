@@ -13,7 +13,7 @@ function init() {
     const cardContainer = document.createElement("div");
     cardContainer.classList.add("card-container");
 
-    getTagMenus(recipes);
+    getTagMenus();
 
     sectionRecipes.append(cardContainer);
     main.append(sectionRecipes);
@@ -45,10 +45,14 @@ function displayRecipes(recipes) {
     });
 
     currentRecipesDisplayed = recipes;
+
+    getTagsOptions(currentRecipesDisplayed, "appliance");
+    getTagsOptions(currentRecipesDisplayed, "ustensils");
+    getTagsOptions(currentRecipesDisplayed, "ingredients");
 }
 
 
-function getTagMenus(recipes) {
+function getTagMenus() {
     const main = document.querySelector("main");
 
     const sectionFilter =  document.createElement("section");
@@ -60,13 +64,13 @@ function getTagMenus(recipes) {
     const filterContainer =  document.createElement("div");
     filterContainer.classList.add("filter-container");
 
-    const menuIngredients = new TagMenu("Ingrédients", "blue", "ingredients", recipes);
+    const menuIngredients = new TagMenu("Ingrédients", "blue", "ingredients");
     const menuIngredientsDOM = menuIngredients.getElementDOM();
     
-    const menuAppliances = new TagMenu("Appareils", "green", "appliance", recipes);
+    const menuAppliances = new TagMenu("Appareils", "green", "appliance");
     const menuAppliancesDOM = menuAppliances.getElementDOM();
     
-    const menuUstensils = new TagMenu("Ustensiles", "red", "ustensils", recipes);
+    const menuUstensils = new TagMenu("Ustensiles", "red", "ustensils");
     const menuUstensilsDOM = menuUstensils.getElementDOM();
     
     filterContainer.append(menuIngredientsDOM, menuAppliancesDOM, menuUstensilsDOM);
@@ -83,7 +87,6 @@ function filterRecipes(event) {
     const menuAppliancesOptions = document.querySelector("#menu-appliance").querySelector(".filter-menu-options");
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
     
-
     const recipesCorrespondingToInput = recipes.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
     || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipe when there are ingredient key values corresponding to input
@@ -99,12 +102,7 @@ function filterRecipes(event) {
     // display recipes and get tag options according to input value
     if (inputValue.length >= 3) {
         displayRecipes(recipesCorrespondingToInput);
-        getTagsOptions(recipesCorrespondingToInput, "appliance")
-        getTagsOptions(recipesCorrespondingToInput, "ingredients")
-        getTagsOptions(recipesCorrespondingToInput, "ustensils")
-
-        currentRecipesDisplayed = recipesCorrespondingToInput;
-
+        
         if (currentRecipesDisplayed.length <= 0) {
             const message = document.createElement("p");
             message.textContent = "Aucune recette ne correspond à votre critère... vous pouvez chercher « tarte aux pommes », « poisson », etc.";
@@ -112,12 +110,6 @@ function filterRecipes(event) {
         }
     } else {
         displayRecipes(recipes);
-
-        getTagsOptions(recipes, "appliance")
-        getTagsOptions(recipes, "ingredients")
-        getTagsOptions(recipes, "ustensils")
-
-        currentRecipesDisplayed = recipes;
     }    
 }
 
@@ -126,7 +118,6 @@ function getTagsOptions(recipes, tagsType) {
     const menuSelected = document.querySelector(`#menu-${tagsType}`);
     const optionsContainer = menuSelected.querySelector(".filter-menu-options");
     const tags = [];
-
 
     optionsContainer.textContent = "";
 
@@ -147,6 +138,7 @@ function getTagsOptions(recipes, tagsType) {
 
     const tagsWithoutDuplicate = Array.from(new Set(tags)); // Set allows to remove duplicate from array
 
+    // generate tags options items
     tagsWithoutDuplicate.forEach(tagOption => {
         const tagModel = new TagFactory(tagOption);
         const tagDOM = tagModel.getElementDOM();
@@ -202,11 +194,5 @@ function mutationsReaction(mutationsList) {
         }
 
         displayRecipes(RecipesToDisplayed);
-
-        currentRecipesDisplayed = RecipesToDisplayed;
-
-        getTagsOptions(currentRecipesDisplayed, "appliance");
-        getTagsOptions(currentRecipesDisplayed, "ustensils");
-        getTagsOptions(currentRecipesDisplayed, "ingredients");
     }
 };

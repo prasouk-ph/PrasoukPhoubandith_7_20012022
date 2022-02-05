@@ -1,9 +1,8 @@
 class TagMenu {
-    constructor(menuTitle, menuColor, tagsType, recipes) {
+    constructor(menuTitle, menuColor, tagsType) {
         this.menuTitle = menuTitle;
         this.menuColor = menuColor;
         this.tagsType = tagsType;
-        this.recipes = recipes;
     }
     
 
@@ -26,41 +25,10 @@ class TagMenu {
         searchBar.setAttribute("type", "search");
         searchBar.setAttribute("name", "filter-search");
         searchBar.setAttribute("placeholder", `Rechercher un ${this.tagsType}`);
-        
-
-        // get tags according to type and recipes displayed
-        const tagsFromRecipesDisplay = [];
-
-        this.recipes.forEach(recipe => {
-            if (!Array.isArray(recipe[`${this.tagsType}`])) {
-                tagsFromRecipesDisplay.push(recipe[`${this.tagsType}`]);
-            }
-            else {
-                recipe[`${this.tagsType}`].forEach(tagOption => {
-                    if (typeof tagOption === "object") {
-                        tagsFromRecipesDisplay.push(tagOption.ingredient)
-                    } else {
-                        tagsFromRecipesDisplay.push(tagOption)
-                    }
-                });
-            }
-        });
-
-        const tagsWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplay)); // Set allows to remove duplicate from array
-
+    
         const optionsContainer = document.createElement("ul");
         optionsContainer.classList.add("filter-menu-options");
         
-        const tagContainer = document.createElement("div");
-        tagContainer.classList.add("tag-container");
-        
-        // generate tags options items
-        tagsWithoutDuplicate.forEach(tagOption => {
-            const tagModel = new TagFactory(tagOption);
-            const tagDOM = tagModel.getElementDOM();
-            optionsContainer.append(tagDOM);
-            }
-        )
 
 
         // append elements
@@ -110,7 +78,6 @@ class TagMenu {
             const tagsType = getTagsType();
             const tagsFromRecipesDisplay = [];
             
-
             // get tags according to type and recipes displayed
             currentRecipesDisplayed.forEach(recipe => {
                 if (!Array.isArray(recipe[tagsType])) { // when tag type is appliance
@@ -151,7 +118,6 @@ class TagMenu {
             // to update the options container size
             const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
             const menuContent = optionsContainer.parentNode;
-
 
             if (menuOptionsQty.length <= 1) {
                 menuContent.style.width = "180px";
@@ -206,7 +172,6 @@ class TagFactory {
             const tagsType = getTagsType();
             const existingTagsButtons = [];
             
-
             // get button tag value
             document.querySelectorAll(".button-tag").forEach(tagButton => {
                 existingTagsButtons.push(tagButton.textContent);
