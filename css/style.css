@@ -170,7 +170,7 @@ main {
 }
 
 .option-item {
-    width: 205px;
+    width: 170px;
     min-height: 22px;
     list-style: none;
     padding: 5px 10px;
@@ -292,8 +292,11 @@ main {
 .recipe-ingredients {
     width: 50%;
     height: 100%;
-    overflow: hidden;
     text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .recipe-notice {
@@ -301,7 +304,7 @@ main {
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 7;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     font-family: 'Roboto';
 }

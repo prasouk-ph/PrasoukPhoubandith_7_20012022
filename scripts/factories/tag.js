@@ -189,10 +189,10 @@ function updateOptionsContainerSize(menuOptionsQty, menuContent, menuSelected) {
         menuContent.style.width = "180px";
         menuSelected.style.marginRight = "50px";
     } else if (menuOptionsQty.length == 2) {
-        menuContent.style.width = "450px";
-        menuSelected.style.marginRight = "320px";
+        menuContent.style.width = "415px";
+        menuSelected.style.marginRight = "285px";
     } else if (menuOptionsQty.length >= 3) {
-        menuContent.style.width = "680px";
-        menuSelected.style.marginRight = "550px";
+        menuContent.style.width = "570px";
+        menuSelected.style.marginRight = "440px";
     }
 }
