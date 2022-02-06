@@ -181,13 +181,23 @@ function mutationsReaction(mutationsList) {
                 || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(mainSearchInputValue))
             );
 
-            const recipesCorrespondingToInputAndTags = recipesCorrespondingToInput.filter(recipe => 
+            const recipesCorrespondingToTags = recipes.filter(recipe => 
                 appliancesTagsSelected.every(tags => recipe.appliance.includes(tags)) // get recipe including EVERY tags from appliancesTagsSelected array, can't use includes alone because will get only one tag
                 && ustensilsTagsSelected.every(tags => recipe.ustensils.includes(tags))
                 && ingredientsTagsSelected.every(tags => recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tags)))
             );
 
-            displayRecipes(recipesCorrespondingToInputAndTags);
+            const recipesCorrespondingToInputAndTags = recipesCorrespondingToInput.filter(recipe => 
+                appliancesTagsSelected.every(tags => recipe.appliance.includes(tags))
+                && ustensilsTagsSelected.every(tags => recipe.ustensils.includes(tags))
+                && ingredientsTagsSelected.every(tags => recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tags)))
+            );
+
+            if (mainSearchInputValue.length >= 3) {
+                displayRecipes(recipesCorrespondingToInputAndTags);
+            } else {
+                displayRecipes(recipesCorrespondingToTags);
+            }
         }
 
         // mark tags options selected
