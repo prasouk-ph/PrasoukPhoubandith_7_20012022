@@ -134,7 +134,7 @@ class TagFactory {
             const tagsType = getTagsType(menuSelected);
             
             // get button tag value
-            const existingTagsButtons = Array.from(document.querySelectorAll(".button-tag")).map(tagButton => tagButton.textContent)
+            const existingTagsButtons = Array.from(document.querySelectorAll(".button-tag")).map(tagButton => tagButton.textContent);
 
             // create tag button according to tag type
             if (!existingTagsButtons.includes(tagOption.textContent)) {

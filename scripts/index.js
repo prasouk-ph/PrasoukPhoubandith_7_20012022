@@ -156,24 +156,20 @@ function mutationsReaction(mutationsList) {
             );
             
             displayRecipes(recipesCorrespondingToTags);
+            
         } else if (mutation.removedNodes.length > 0) {
-            const existingTagsButtons = document.querySelectorAll(".button-tag");
-            const appliancesTagsSelected = [];
-            const ustensilsTagsSelected = [];
-            const ingredientsTagsSelected = [];
+            const existingTagsButtons = Array.from(document.querySelectorAll(".button-tag"));
             const mainSearchInputValue = document.querySelector("#main-search-bar").value.toLowerCase();
 
-            // separate tags by type
-            existingTagsButtons.forEach(tagButton => {
-                if (tagButton.getAttribute("tagtype") == "appliance") {
-                    appliancesTagsSelected.push(tagButton.textContent)
-                } else if (tagButton.getAttribute("tagtype") == "ustensils") {
-                    ustensilsTagsSelected.push(tagButton.textContent)
-                } else if (tagButton.getAttribute("tagtype") == "ingredients") {
-                    ingredientsTagsSelected.push(tagButton.textContent)
-                }
-            });
+            const appliancesTagsSelected = existingTagsButtons.filter(tagButton => (tagButton.getAttribute("tagtype") == "appliance")
+            ).map(tagButton => tagButton.textContent);
 
+            const ustensilsTagsSelected = existingTagsButtons.filter(tagButton => (tagButton.getAttribute("tagtype") == "ustensils")
+            ).map(tagButton => tagButton.textContent);
+
+            const ingredientsTagsSelected = existingTagsButtons.filter(tagButton => (tagButton.getAttribute("tagtype") == "ingredients")
+            ).map(tagButton => tagButton.textContent);
+            
             const recipesCorrespondingToInput = recipes.filter(recipe => 
                 recipe.name.toLowerCase().includes(mainSearchInputValue)
                 || recipe.description.toLowerCase().includes(mainSearchInputValue)
@@ -190,8 +186,7 @@ function mutationsReaction(mutationsList) {
         }
 
         // mark tags options selected
-        const tagContainer = document.querySelector(".tag-container");
-        const existingTagButtons = Array.from(tagContainer.querySelectorAll(".button-tag")).map(button => button.textContent);
+        const existingTagButtons = Array.from(document.querySelectorAll(".button-tag")).map(button => button.textContent);
 
         const optionsItems = document.querySelectorAll(".option-item");
         
