@@ -125,12 +125,17 @@ function getTagsOptions(recipes, tagsType) {
     const tagsFromRecipesDisplayedWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplayed)); // Set allows to remove duplicate from array
 
     // generate tags options items
-    tagsFromRecipesDisplayedWithoutDuplicate.forEach(tagOption => {
-        const tagModel = new TagFactory(tagOption);
-        const tagDOM = tagModel.getElementDOM();
-        optionsContainer.append(tagDOM);
-        }
-    )
+    if (tagsFromRecipesDisplayedWithoutDuplicate.length > 0) {
+        tagsFromRecipesDisplayedWithoutDuplicate.forEach(tagOption => {
+            const tagModel = new TagFactory(tagOption);
+            const tagDOM = tagModel.getElementDOM();
+            optionsContainer.append(tagDOM);
+            })
+    } else {
+        const noResultMessage = document.createElement("p");
+        noResultMessage.textContent = "Aucun résultat";
+        optionsContainer.append(noResultMessage);
+    }
 
 
     function getTagsValue() {
@@ -156,7 +161,7 @@ function mutationsReaction(mutationsList) {
             );
             
             displayRecipes(recipesCorrespondingToTags);
-            
+
         } else if (mutation.removedNodes.length > 0) {
             const existingTagsButtons = Array.from(document.querySelectorAll(".button-tag"));
             const mainSearchInputValue = document.querySelector("#main-search-bar").value.toLowerCase();
