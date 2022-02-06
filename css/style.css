@@ -220,7 +220,7 @@ main {
 
 .card {
     height: 364px;
-    width: 380px;
+    /* width: 380px; */
     left: 0px;
     top: 0px;
     border-radius: 5px;
@@ -228,8 +228,7 @@ main {
 }
 
 .card-picture {
-    height: 178px;
-    width: 380px;
+    height: 49%;
 }
 
 .recipe-picture {
@@ -240,7 +239,7 @@ main {
 }
 
 .card-content {
-    height: 186px;
+    height: 51%;
     display: flex;
     flex-direction: column;
     padding: 0 20px;
@@ -291,15 +290,14 @@ main {
 }
 
 .recipe-ingredients {
-    width: 171px;
-    height: 105px;
+    width: 50%;
+    height: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .recipe-notice {
-    width: 171px;
-    height: 100px;
+    width: 50%;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
