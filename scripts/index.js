@@ -64,13 +64,13 @@ function getTagMenus() {
     const filterContainer =  document.createElement("div");
     filterContainer.classList.add("filter-container");
 
-    const menuIngredients = new TagMenu("Ingrédients", "blue", "ingredients");
+    const menuIngredients = new TagMenu("Ingrédients", "blue", "ingredients", "ingrédient");
     const menuIngredientsDOM = menuIngredients.getElementDOM();
     
-    const menuAppliances = new TagMenu("Appareils", "green", "appliance");
+    const menuAppliances = new TagMenu("Appareils", "green", "appliance", "appareil");
     const menuAppliancesDOM = menuAppliances.getElementDOM();
     
-    const menuUstensils = new TagMenu("Ustensiles", "red", "ustensils");
+    const menuUstensils = new TagMenu("Ustensiles", "red", "ustensils", "ustensile");
     const menuUstensilsDOM = menuUstensils.getElementDOM();
     
     filterContainer.append(menuIngredientsDOM, menuAppliancesDOM, menuUstensilsDOM);
@@ -92,7 +92,7 @@ function filterRecipes(event) {
     || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipes when there are values from key ingredient corresponding to input
     );
     
-    // clear every container
+    // clear every containers
     cardContainer.textContent = "";
     tagContainer.textContent = "";
     menuIngredientsOptions.textContent = "";
@@ -178,7 +178,7 @@ function mutationsReaction(mutationsList) {
             );
 
             const recipesCorrespondingToInputAndTags = recipesCorrespondingToInput.filter(recipe => 
-                appliancesTagsSelected.every(tags => recipe.appliance.includes(tags)) // get recipe including EVERY tags from appliancesTagsSelected array
+                appliancesTagsSelected.every(tags => recipe.appliance.includes(tags)) // get recipe including EVERY tags from appliancesTagsSelected array, can't use includes alone because will get only one tag
                 && ustensilsTagsSelected.every(tags => recipe.ustensils.includes(tags))
                 && ingredientsTagsSelected.every(tags => recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.includes(tags)))
             );

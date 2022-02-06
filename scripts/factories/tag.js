@@ -1,8 +1,9 @@
 class TagMenu {
-    constructor(menuTitle, menuColor, tagsType) {
+    constructor(menuTitle, menuColor, tagsType, tagsTypeName) {
         this.menuTitle = menuTitle;
         this.menuColor = menuColor;
         this.tagsType = tagsType;
+        this.tagsTypeName = tagsTypeName;
     }
     
 
@@ -24,13 +25,11 @@ class TagMenu {
         searchBar.classList.add("tag-search-bar");
         searchBar.setAttribute("type", "search");
         searchBar.setAttribute("name", "filter-search");
-        searchBar.setAttribute("placeholder", `Rechercher un ${this.tagsType}`);
+        searchBar.setAttribute("placeholder", `Rechercher un ${this.tagsTypeName}`);
     
         const optionsContainer = document.createElement("ul");
         optionsContainer.classList.add("filter-menu-options");
         
-
-
         // append elements
         menu.append(menuTitle, menuContent);
         menuContent.append(searchBar, optionsContainer);
@@ -46,7 +45,7 @@ class TagMenu {
             
             menuContent.style.display = "block";
 
-            // to update the options container size
+            // update the options container size
             if (menuOptionsQty.length <= 1) {
                 menuContent.style.width = "180px";
                 menu.style.marginRight = "50px";
@@ -98,8 +97,6 @@ class TagMenu {
         
             optionsContainer.textContent = "";
 
-            // to fit tag hiding, add condition : if tag already exist in a button tag in tag container, don't create tag model
-
             // generate tags options items
             if (tagsCorrespondingToInput.length > 0) {
                 tagsCorrespondingToInput.forEach(tag => {
@@ -113,7 +110,7 @@ class TagMenu {
                 optionsContainer.append(noResultMessage);
             }
         
-            // to update the options container size
+            // update the options container size
             const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
             const menuContent = optionsContainer.parentNode;
 
