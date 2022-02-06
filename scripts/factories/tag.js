@@ -75,25 +75,12 @@ class TagMenu {
             const optionsContainer = event.target.parentNode.querySelector(".filter-menu-options");
             const menuSelected = optionsContainer.parentNode.parentNode;
             const tagsType = getTagsType();
-            let tagsFromRecipesDisplayed = [];
+            const tagsFromRecipesDisplayed = getTagsValue();
             
-            if (tagsType == "ingredients") {
-                tagsFromRecipesDisplayed = currentRecipesDisplayed.flatMap((recipe) => recipe[tagsType].map((item) => item.ingredient));
-            } 
-            else {
-                tagsFromRecipesDisplayed = currentRecipesDisplayed.flatMap(recipe => recipe[tagsType]); // flatmap allows to merge an array containing another arrays into only one array
-            }
-        
             const tagsFromRecipesDisplayedWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplayed));
-            
-            const tagsCorrespondingToInput = [];
         
             // get tags according to input value
-            tagsFromRecipesDisplayedWithoutDuplicate.forEach(tag => {
-                if (tag.toLowerCase().includes(inputValue)) {
-                    tagsCorrespondingToInput.push(tag);
-                }
-            });
+            const tagsCorrespondingToInput = tagsFromRecipesDisplayedWithoutDuplicate.filter(tag => tag.toLowerCase().includes(inputValue));
         
             optionsContainer.textContent = "";
 
@@ -135,6 +122,16 @@ class TagMenu {
                     return "ingredients";
                 }
             }
+
+
+            function getTagsValue() {
+                if (tagsType == "ingredients") {
+                    return currentRecipesDisplayed.flatMap((recipe) => recipe[tagsType].map((item) => item.ingredient));
+                } 
+                else {
+                    return currentRecipesDisplayed.flatMap(recipe => recipe[tagsType]); // flatmap allows to merge an array containing another arrays into only one array
+                }
+            }
         }
 
         return menu;
@@ -165,17 +162,12 @@ class TagFactory {
             const menuDropdownSelected = optionsContainer.parentNode;
             const tagOption = event.target;
             const tagsType = getTagsType();
-            const existingTagsButtons = [];
             
             // get button tag value
-            document.querySelectorAll(".button-tag").forEach(tagButton => {
-                existingTagsButtons.push(tagButton.textContent);
-            });
+            const existingTagsButtons = Array.from(document.querySelectorAll(".button-tag")).map(tagButton => tagButton.textContent)
 
             // create tag button according to tag type
-            if (existingTagsButtons.includes(tagOption.textContent)) {
-                console.log("Can't add existed tag")
-            } else {
+            if (!existingTagsButtons.includes(tagOption.textContent)) {
                 const tagButton = document.createElement("button");
 
                 tagButton.classList.add("button-tag");

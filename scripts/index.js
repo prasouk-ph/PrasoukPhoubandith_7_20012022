@@ -118,16 +118,9 @@ function filterRecipes(event) {
 function getTagsOptions(recipes, tagsType) {
     const menuSelected = document.querySelector(`#menu-${tagsType}`);
     const optionsContainer = menuSelected.querySelector(".filter-menu-options");
-    let tagsFromRecipesDisplayed = [];
+    const tagsFromRecipesDisplayed = getTagsValue();
 
     optionsContainer.textContent = "";
-
-    if (tagsType == "ingredients") {
-        tagsFromRecipesDisplayed = recipes.flatMap((recipe) => recipe[tagsType].map((item) => item.ingredient));
-    } 
-    else {
-        tagsFromRecipesDisplayed = recipes.flatMap(recipe => recipe[tagsType]); // flatmap allows to merge an array containing another arrays into only one array
-    }
 
     const tagsFromRecipesDisplayedWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplayed)); // Set allows to remove duplicate from array
 
@@ -138,6 +131,16 @@ function getTagsOptions(recipes, tagsType) {
         optionsContainer.append(tagDOM);
         }
     )
+
+
+    function getTagsValue() {
+        if (tagsType == "ingredients") {
+            return recipes.flatMap((recipe) => recipe[tagsType].map((item) => item.ingredient));
+        } 
+        else {
+            return recipes.flatMap(recipe => recipe[tagsType]); // flatmap allows to merge an array containing another arrays into only one array
+        }
+    }
 }
 
 
