@@ -45,17 +45,7 @@ class TagMenu {
             
             menuContent.style.display = "block";
 
-            // update the options container size
-            if (menuOptionsQty.length <= 1) {
-                menuContent.style.width = "180px";
-                menu.style.marginRight = "50px";
-            } else if (menuOptionsQty.length == 2) {
-                menuContent.style.width = "450px";
-                menu.style.marginRight = "320px";
-            } else if (menuOptionsQty.length >= 3) {
-                menuContent.style.width = "680px";
-                menu.style.marginRight = "550px";
-            }
+            updateOptionsContainerSize(menuOptionsQty, menuContent, menu);
 
             document.addEventListener("click", closeDropdown);
 
@@ -74,7 +64,7 @@ class TagMenu {
             const inputValue = event.target.value.toLowerCase();
             const optionsContainer = event.target.parentNode.querySelector(".filter-menu-options");
             const menuSelected = optionsContainer.parentNode.parentNode;
-            const tagsType = getTagsType();
+            const tagsType = getTagsType(menuSelected);
             const tagsFromRecipesDisplayed = getTagsValue();
             
             const tagsFromRecipesDisplayedWithoutDuplicate = Array.from(new Set(tagsFromRecipesDisplayed));
@@ -101,27 +91,7 @@ class TagMenu {
             const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
             const menuContent = optionsContainer.parentNode;
 
-            if (menuOptionsQty.length <= 1) {
-                menuContent.style.width = "180px";
-                menuSelected.style.marginRight = "50px";
-            } else if (menuOptionsQty.length == 2) {
-                menuContent.style.width = "450px";
-                menuSelected.style.marginRight = "320px";
-            } else if (menuOptionsQty.length >= 3) {
-                menuContent.style.width = "680px";
-                menuSelected.style.marginRight = "550px";
-            }
-        
-        
-            function getTagsType() {
-                if (menuSelected.id == "menu-appliance") {
-                    return "appliance";
-                } else if (menuSelected.id == "menu-ustensils") {
-                    return "ustensils";
-                } else if (menuSelected.id == "menu-ingredients") {
-                    return "ingredients";
-                }
-            }
+            updateOptionsContainerSize(menuOptionsQty, menuContent, menuSelected);
 
 
             function getTagsValue() {
@@ -161,7 +131,7 @@ class TagFactory {
             const menuSelected = optionsContainer.parentNode.parentNode;
             const menuDropdownSelected = optionsContainer.parentNode;
             const tagOption = event.target;
-            const tagsType = getTagsType();
+            const tagsType = getTagsType(menuSelected);
             
             // get button tag value
             const existingTagsButtons = Array.from(document.querySelectorAll(".button-tag")).map(tagButton => tagButton.textContent)
@@ -189,16 +159,7 @@ class TagFactory {
                 // to update the options container size
                 const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
 
-                if (optionsVisible.length <= 1) {
-                    menuDropdownSelected.style.width = "180px";
-                    menuSelected.style.marginRight = "50px";
-                } else if (optionsVisible.length == 2) {
-                    menuDropdownSelected.style.width = "450px";
-                    menuSelected.style.marginRight = "320px";
-                } else if (optionsVisible.length >= 3) {
-                    menuDropdownSelected.style.width = "680px";
-                    menuSelected.style.marginRight = "550px";
-                }
+                updateOptionsContainerSize(optionsVisible, menuDropdownSelected, menuSelected);
             }
 
             
@@ -207,17 +168,31 @@ class TagFactory {
                 
                 tagContainer.removeChild(event.target);
             }
-
-
-            function getTagsType() {
-                if (menuSelected.id == "menu-appliance") {
-                    return "appliance";
-                } else if (menuSelected.id == "menu-ustensils") {
-                    return "ustensils";
-                } else if (menuSelected.id == "menu-ingredients") {
-                    return "ingredients";
-                }
-            }
         }
+    }
+}
+
+
+function getTagsType(menuSelected) {
+    if (menuSelected.id == "menu-appliance") {
+        return "appliance";
+    } else if (menuSelected.id == "menu-ustensils") {
+        return "ustensils";
+    } else if (menuSelected.id == "menu-ingredients") {
+        return "ingredients";
+    }
+}
+
+
+function updateOptionsContainerSize(menuOptionsQty, menuContent, menuSelected) {
+    if (menuOptionsQty.length <= 1) {
+        menuContent.style.width = "180px";
+        menuSelected.style.marginRight = "50px";
+    } else if (menuOptionsQty.length == 2) {
+        menuContent.style.width = "450px";
+        menuSelected.style.marginRight = "320px";
+    } else if (menuOptionsQty.length >= 3) {
+        menuContent.style.width = "680px";
+        menuSelected.style.marginRight = "550px";
     }
 }
