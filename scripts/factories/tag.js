@@ -41,7 +41,7 @@ class TagMenu {
 
         // functions
         function openDropdown() {
-            const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
+            const menuOptionsQty = optionsContainer.querySelectorAll(".option-item");
             
             menuContent.style.display = "block";
 
@@ -88,7 +88,7 @@ class TagMenu {
             }
         
             // update the options container size
-            const menuOptionsQty = optionsContainer.querySelectorAll(":not(.hide)");
+            const menuOptionsQty = optionsContainer.querySelectorAll(".option-item");
             const menuContent = optionsContainer.parentNode;
 
             updateOptionsContainerSize(menuOptionsQty, menuContent, menuSelected);
@@ -168,7 +168,7 @@ class TagFactory {
                 tagContainer.append(tagButton);
 
                 // to update the options container size
-                const optionsVisible = optionsContainer.querySelectorAll(":not(.hide)");
+                const optionsVisible = optionsContainer.querySelectorAll(".option-item");
 
                 updateOptionsContainerSize(optionsVisible, menuDropdownSelected, menuSelected);
             }
