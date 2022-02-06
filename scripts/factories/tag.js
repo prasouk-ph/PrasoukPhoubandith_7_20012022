@@ -93,6 +93,17 @@ class TagMenu {
 
             updateOptionsContainerSize(menuOptionsQty, menuContent, menuSelected);
 
+            // mark tags options already selected
+            const existingTagButtons = Array.from(document.querySelectorAll(".button-tag")).map(button => button.textContent);
+
+            const optionsItems = document.querySelectorAll(".option-item");
+
+            optionsItems.forEach(item => {
+                if (existingTagButtons.includes(item.textContent)) {
+                    item.classList.add("active");
+                }
+            })
+
 
             function getTagsValue() {
                 if (tagsType == "ingredients") {
