@@ -49,6 +49,8 @@ function displayRecipes(recipes) {
     getTagsOptions(currentRecipesDisplayed, "appliance");
     getTagsOptions(currentRecipesDisplayed, "ustensils");
     getTagsOptions(currentRecipesDisplayed, "ingredients");
+
+    updateOptionsContainerSize();
 }
 
 

@@ -44,8 +44,9 @@ class TagMenu {
             const menuOptionsQty = optionsContainer.querySelectorAll(".option-item");
             
             menuContent.style.display = "block";
+            menu.classList.add("expanded");
 
-            updateOptionsContainerSize(menuOptionsQty, menuContent, menu);
+            updateOptionsContainerSize();
 
             document.addEventListener("click", closeDropdown);
 
@@ -55,6 +56,7 @@ class TagMenu {
                     menuContent.style.display = "none";
                     menu.style.marginRight = "0px";
                     document.removeEventListener("click", closeDropdown);
+                    menu.classList.remove("expanded");
                 } 
             }
         }
@@ -86,12 +88,8 @@ class TagMenu {
                 noResultMessage.textContent = "Aucun résultat";
                 optionsContainer.append(noResultMessage);
             }
-        
-            // update the options container size
-            const menuOptionsQty = optionsContainer.querySelectorAll(".option-item");
-            const menuContent = optionsContainer.parentNode;
 
-            updateOptionsContainerSize(menuOptionsQty, menuContent, menuSelected);
+            updateOptionsContainerSize();
 
             // mark tags options already selected
             const existingTagButtons = Array.from(document.querySelectorAll(".button-tag")).map(button => button.textContent);
@@ -143,6 +141,9 @@ class TagFactory {
             const menuDropdownSelected = optionsContainer.parentNode;
             const tagOption = event.target;
             const tagsType = getTagsType(menuSelected);
+
+            // prevent menu closing but container size can't be updated
+            event.stopPropagation();
             
             // get button tag value
             const existingTagsButtons = Array.from(document.querySelectorAll(".button-tag")).map(tagButton => tagButton.textContent);
@@ -166,11 +167,6 @@ class TagFactory {
                 tagButton.addEventListener("click", removeTag);
 
                 tagContainer.append(tagButton);
-
-                // to update the options container size
-                const optionsVisible = optionsContainer.querySelectorAll(".option-item");
-
-                updateOptionsContainerSize(optionsVisible, menuDropdownSelected, menuSelected);
             }
 
             
@@ -195,15 +191,20 @@ function getTagsType(menuSelected) {
 }
 
 
-function updateOptionsContainerSize(menuOptionsQty, menuContent, menuSelected) {
-    if (menuOptionsQty.length <= 1) {
-        menuContent.style.width = "180px";
-        menuSelected.style.marginRight = "50px";
-    } else if (menuOptionsQty.length == 2) {
-        menuContent.style.width = "415px";
-        menuSelected.style.marginRight = "285px";
-    } else if (menuOptionsQty.length >= 3) {
-        menuContent.style.width = "570px";
-        menuSelected.style.marginRight = "440px";
-    }
+function updateOptionsContainerSize() {
+    const menus = document.querySelectorAll(".filter-menu");
+
+    menus.forEach(menu => {
+        const optionsContainer = menu.querySelector(".filter-menu-options");
+        if (menu.className.includes("expanded") & optionsContainer.childElementCount <= 1) {
+            optionsContainer.style.width = "180px";
+            menu.style.marginRight = "50px";
+        } else if (menu.className.includes("expanded") & optionsContainer.childElementCount == 2) {
+            optionsContainer.style.width = "415px";
+            menu.style.marginRight = "285px";
+        } else if (menu.className.includes("expanded") & optionsContainer.childElementCount >= 3) {
+            optionsContainer.style.width = "570px";
+            menu.style.marginRight = "440px";
+        }
+    })
 }
