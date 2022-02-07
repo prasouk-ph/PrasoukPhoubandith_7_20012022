@@ -41,8 +41,6 @@ class TagMenu {
 
         // functions
         function openDropdown() {
-            const menuOptionsQty = optionsContainer.querySelectorAll(".option-item");
-            
             menuContent.style.display = "block";
             menu.classList.add("expanded");
 
