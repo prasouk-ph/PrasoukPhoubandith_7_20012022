@@ -139,6 +139,8 @@ function getTagsOptions(recipes, tagsType) {
         optionsContainer.append(noResultMessage);
     }
 
+    markTagsOptionsSelected();
+
 
     function getTagsValue() {
         if (tagsType == "ingredients") {
@@ -201,16 +203,5 @@ function mutationsReaction(mutationsList) {
                 displayRecipes(recipesCorrespondingToTags);
             }
         }
-
-        // mark tags options selected
-        const existingTagButtons = Array.from(document.querySelectorAll(".button-tag")).map(button => button.textContent);
-
-        const optionsItems = document.querySelectorAll(".option-item");
-        
-        optionsItems.forEach(item => {
-            if (existingTagButtons.includes(item.textContent)) {
-                item.classList.add("active");
-            }
-        })
     }
 };

@@ -91,16 +91,7 @@ class TagMenu {
 
             updateOptionsContainerSize();
 
-            // mark tags options already selected
-            const existingTagButtons = Array.from(document.querySelectorAll(".button-tag")).map(button => button.textContent);
-
-            const optionsItems = document.querySelectorAll(".option-item");
-
-            optionsItems.forEach(item => {
-                if (existingTagButtons.includes(item.textContent)) {
-                    item.classList.add("active");
-                }
-            })
+            markTagsOptionsSelected();
 
 
             function getTagsValue() {
@@ -205,6 +196,19 @@ function updateOptionsContainerSize() {
         } else if (menu.className.includes("expanded") & optionsContainer.childElementCount >= 3) {
             optionsContainer.style.width = "570px";
             menu.style.marginRight = "440px";
+        }
+    })
+}
+
+
+function markTagsOptionsSelected() {
+    const existingTagButtons = Array.from(document.querySelectorAll(".button-tag")).map(button => button.textContent);
+
+    const optionsItems = document.querySelectorAll(".option-item");
+    
+    optionsItems.forEach(item => {
+        if (existingTagButtons.includes(item.textContent)) {
+            item.classList.add("active");
         }
     })
 }
