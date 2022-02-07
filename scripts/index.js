@@ -27,6 +27,9 @@ function init() {
 
     let tagContainerListener = new MutationObserver(mutationsReaction);
     tagContainerListener.observe(tagContainer, { childList: true } );
+
+    const searchForm =  document.querySelector(".search-form");
+    searchForm.addEventListener("submit", validateSearch)
 }
 
 
@@ -82,13 +85,20 @@ function getTagMenus() {
 
 
 function filterRecipes(event) {
-    const inputValue = event.target.value.toLowerCase();
     const cardContainer = document.querySelector(".card-container");
     const tagContainer = document.querySelector(".tag-container");
     const menuIngredientsOptions = document.querySelector("#menu-ingredients").querySelector(".filter-menu-options");
     const menuAppliancesOptions = document.querySelector("#menu-appliance").querySelector(".filter-menu-options");
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
+    let inputValue;
     
+    // get input value without regard of event type
+    if (event.type == "input" || event.type == "change") {
+        inputValue = event.target.value.toLowerCase();
+    } else if (event.type == "submit") {
+        inputValue = event.target[0].value.toLowerCase();
+    }
+
     const recipesCorrespondingToInput = recipes.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
     || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipes when there are values from key ingredient corresponding to input
@@ -113,7 +123,7 @@ function filterRecipes(event) {
         }
     } else {
         displayRecipes(recipes);
-    }    
+    }
 }
 
 
@@ -205,3 +215,9 @@ function mutationsReaction(mutationsList) {
         }
     }
 };
+
+
+function validateSearch(event) {
+    event.preventDefault();
+    filterRecipes(event);
+}
