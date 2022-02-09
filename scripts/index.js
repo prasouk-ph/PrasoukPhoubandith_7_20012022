@@ -21,7 +21,7 @@ function init() {
     displayRecipes(recipes);
 
     const mainSearchBar = document.querySelector("#main-search-bar");
-    mainSearchBar.addEventListener("input", filterRecipes);
+    mainSearchBar.addEventListener("change", filterRecipes);
 
     const tagContainer = document.querySelector(".tag-container");
 
