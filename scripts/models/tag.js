@@ -127,7 +127,6 @@ class Tag {
             const tagContainer = document.querySelector(".tag-container");
             const optionsContainer = event.target.parentNode;
             const menuSelected = optionsContainer.parentNode.parentNode;
-            const menuDropdownSelected = optionsContainer.parentNode;
             const tagOption = event.target;
             const tagsType = getTagsType(menuSelected);
 

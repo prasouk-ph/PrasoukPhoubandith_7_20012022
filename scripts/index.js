@@ -90,14 +90,7 @@ function filterRecipes(event) {
     const menuIngredientsOptions = document.querySelector("#menu-ingredients").querySelector(".filter-menu-options");
     const menuAppliancesOptions = document.querySelector("#menu-appliance").querySelector(".filter-menu-options");
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
-    let inputValue;
-    
-    // get input value without regard of event type
-    if (event.type == "input" || event.type == "change") {
-        inputValue = event.target.value.toLowerCase();
-    } else if (event.type == "submit") {
-        inputValue = event.target[0].value.toLowerCase();
-    }
+    const inputValue = event.target[0].value.toLowerCase();
 
     const recipesCorrespondingToInput = recipes.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
     || recipe.description.toLowerCase().includes(inputValue)
