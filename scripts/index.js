@@ -92,10 +92,17 @@ function filterRecipes(event) {
     const menuUstensilsOptions = document.querySelector("#menu-ustensils").querySelector(".filter-menu-options");
     const inputValue = event.target[0].value.toLowerCase();
 
-    const recipesCorrespondingToInput = recipes.filter(recipe => recipe.name.toLowerCase().includes(inputValue)
-    || recipe.description.toLowerCase().includes(inputValue)
-    || recipe.ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue)) // select recipes when there are values from key ingredient corresponding to input
-    );
+    const recipesCorrespondingToInput = [];
+
+    for (let i = 0; i < recipes.length; i++) {
+        if (recipes[i].name.toLowerCase().includes(inputValue)) {
+            recipesCorrespondingToInput.push(recipes[i]);
+        } else if (recipes[i].description.toLowerCase().includes(inputValue)) {
+            recipesCorrespondingToInput.push(recipes[i]);
+        } else if (recipes[i].ingredients.some(ingredientItem => ingredientItem.ingredient.toLowerCase().includes(inputValue))) {
+            recipesCorrespondingToInput.push(recipes[i]);
+        }
+    }
     
     // clear every containers
     cardContainer.textContent = "";
