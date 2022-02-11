@@ -42,7 +42,7 @@ function displayRecipes(recipes) {
     menusInputs.forEach(input => input.value = "");
 
     recipes.forEach(recipe => {
-        const recipeModel = new RecipeFactory(recipe);
+        const recipeModel = new Recipe(recipe);
         const recipeCard = recipeModel.createCard();
         cardContainer.appendChild(recipeCard);
     });
@@ -139,7 +139,7 @@ function getTagsOptions(recipes, tagsType) {
     // generate tags options items
     if (tagsFromRecipesDisplayedWithoutDuplicate.length > 0) {
         tagsFromRecipesDisplayedWithoutDuplicate.forEach(tagOption => {
-            const tagModel = new TagFactory(tagOption);
+            const tagModel = new Tag(tagOption);
             const tagDOM = tagModel.getElementDOM();
             optionsContainer.append(tagDOM);
             })

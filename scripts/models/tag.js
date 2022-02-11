@@ -77,7 +77,7 @@ class TagMenu {
             // generate tags options items
             if (tagsCorrespondingToInput.length > 0) {
                 tagsCorrespondingToInput.forEach(tag => {
-                    const tagModel = new TagFactory(tag);
+                    const tagModel = new Tag(tag);
                     const tagDOM = tagModel.getElementDOM();
                     optionsContainer.append(tagDOM);
                 })
@@ -107,7 +107,7 @@ class TagMenu {
 }
 
 
-class TagFactory {
+class Tag {
     constructor(ingredient) {
         this.name = ingredient;
     }

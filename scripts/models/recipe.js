@@ -1,4 +1,4 @@
-class RecipeFactory {
+class Recipe {
     constructor(recipe) {
         this._id = recipe.id;
         this._name = recipe.name;
@@ -38,7 +38,7 @@ class RecipeFactory {
 
         const recipeIngredients = this._ingredients;
         recipeIngredients.forEach(ingredient => {
-            const ingredientModel = new IngredientFactory(ingredient);
+            const ingredientModel = new Ingredient(ingredient);
             const ingredientDOM = ingredientModel.createIngredient();
             recipeIngredientsContainer.append(ingredientDOM);
         });
@@ -59,7 +59,7 @@ class RecipeFactory {
 }
 
 
-class IngredientFactory {
+class Ingredient {
     constructor(data) {
         this.ingredient = data.ingredient;
         this.quantity = data.quantity;
