@@ -130,7 +130,7 @@ class Tag {
             const tagOption = event.target;
             const tagsType = getTagsType(menuSelected);
 
-            // prevent menu closing but container size can't be updated
+            // prevent menu closing
             event.stopPropagation();
             
             // get button tag value
@@ -184,13 +184,13 @@ function updateOptionsContainerSize() {
 
     menus.forEach(menu => {
         const optionsContainer = menu.querySelector(".filter-menu-options");
-        if (menu.className.includes("expanded") & optionsContainer.childElementCount <= 1) {
+        if (menu.className.includes("expanded") && optionsContainer.childElementCount <= 1) {
             optionsContainer.style.width = "180px";
             menu.style.marginRight = "50px";
-        } else if (menu.className.includes("expanded") & optionsContainer.childElementCount == 2) {
+        } else if (menu.className.includes("expanded") && optionsContainer.childElementCount == 2) {
             optionsContainer.style.width = "415px";
             menu.style.marginRight = "285px";
-        } else if (menu.className.includes("expanded") & optionsContainer.childElementCount >= 3) {
+        } else if (menu.className.includes("expanded") && optionsContainer.childElementCount >= 3) {
             optionsContainer.style.width = "570px";
             menu.style.marginRight = "440px";
         }

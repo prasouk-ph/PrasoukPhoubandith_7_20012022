@@ -20,9 +20,6 @@ function init() {
 
     displayRecipes(recipes);
 
-    const mainSearchBar = document.querySelector("#main-search-bar");
-    mainSearchBar.addEventListener("change", filterRecipes);
-
     const tagContainer = document.querySelector(".tag-container");
 
     let tagContainerListener = new MutationObserver(mutationsReaction);
